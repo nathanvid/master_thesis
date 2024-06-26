@@ -1,0 +1,39 @@
+\section{State of the art}
+
+\subsection{Plant as sensor}
+
+\subsubsection{Human-Plant Interaction}
+The human plant interaction has been studied. 
+
+\subsubsection{Plant as sensors Plant transformed into sensors}
+
+\subsubsection{Silicon Made sensors}
+
+\subsubsection{Sonification on micro-controllers}
+MCUs\footnote{Micro-controllers} \cite{rochim2019design} is a kind of small computer.
+Those devices can be used to generate sound. The most common way of doing electronical music
+is to use MIDI\footnote{Musical Instrument Digital Interface} \cite{loyMusiciansMakeStandard1985}.
+MIDI has been created in order to create music with digital computer. MIDI do not describe directly 
+the audio signal but the human actions to create the signal (such as turn the knob left, push the slider...).
+MCU are able to produce those kind of directives \cite{fazendaProceedingsInternationalConference1}\cite{fazendaProceedingsInternationalConference2}.
+However, the MCU can produce MIDI but MIDI does not directly generate sounds. A synthetizer is needed to create the sound
+described.
+
+For our use case of embedding the device, we look at MCU that were able to directly generate the signal 
+from a DAC\footnote{Digital to Analog Converter}. Projects had been conducted with many microcontrollers such as a small
+8 bits AVR microcontrollers (ATmega32) \cite{hussainAVRMicrocontrollerImplementation2011}. This paper does not include limitation of
+such a product but we can guess that the 8 bits microcontroller is limiting the sound quality. A larger project from Shaer and al.
+\cite{shaerInteractiveCapacitiveTouch2020} is including an Arduino Mega controlling the visual effect of the project,
+but also the interaction sensors. The Arduino Mega is then sending MIDI information to Teensy 3.2. The Teensy is then 
+generating the sound. The project is still too large to be fully embedded but the Teensy 3.2 is a promising compute unit.
+The Teensy 3.2 is running at 72 MHz, way faster than the ATmega32 that is operating at 16MHz. The frequency is essential
+when trying the produce sound signals.
+
+
+\subsubsection{Commercial products}
+
+\subsection{Internet of Plants}
+
+\subsubsection{Distributed instruments}
+
+\subsubsection{Sonification using software}
