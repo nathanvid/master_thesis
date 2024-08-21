@@ -9,21 +9,69 @@ explain all the benefits of plants on our human system.
 Watts and al. shows that urban "greening" (add green spaces in urban city)
 increase tranquility, relieve stress and anxiety \cite{wattsEffectsGreeningUrban2017}.
 An experience has been conducted in offices by Ikei and al \cite{ikeiPhysiologicalPsychologicalRelaxing2014}
-to expose roses to employees. The experience showed that the "parasympathetic nervous activity was sig-
-nificantly higher while viewing the rose". The subjects were more comfortable
+to expose roses to employees. The experience showed that the "parasympathetic nervous activity was significantly higher while viewing the rose". The subjects were more comfortable
 being expose to roses than people that were not.
 % Make plants the perfect interface, not harmful, enhance the link
 
 \subsubsection{Human-Plant interaction}
 
-The human plant interaction has been studied. 
+The human plant interaction has been studied. Seow and al. \cite{seowPudicaFrameworkDesigning2022}
+created a framework that is able to detect when something (and someone) interact with a plant.
+However, this is not any plant, the plant used is the \textit{Mimosa Pudica}. This plant is special,
+when something touches its leaves, the plant closes its leaves to protect them from the danger \cite{volkovMimosaPudicaElectrical2010}. 
+An electrical impulse is released and is catch by the device Seow and al. developed. The electrical 
+signal is easy to catch and thus can be used as actuator. However, the plant needs time and energy
+to re-open the leaves. This framework also can't be generalized to other species of plants.
+
+Sato and al. used the process of capacitive sensing to detect interaction with objects of our daily lives \cite{satoToucheEnhancingTouch2012}.
+In this paper, they proposed a device called \textit{Touché} that use swept frequency capacitive sensing  to detect touch interaction 
+but also more complex interactions (such as interacting with a finger, the whole hand...). More complex 
+interactions are captured using machine learning algorithm.
+
+This paper doesn't apply the device to plants. Poupyrev and al. \cite{poupyrevBotanicusInteracticusInteractive2012}
+used the device on plant to demonstrate the usage. This swept frequency technique is usable and better
+than the previous single frequency technique as it captures more data.
+In their article, Honigman and al. \cite{honigmanTechniquesSweptFrequencyb} adapted the \textit{Touché}
+device to be use with an Arduino\footnote{Open source compute unit} microcontroller. This allowing people
+to reproduce the set-up easily.
+
 
 \subsubsection{Plant as sensors Plant transformed into sensors}
 
-\subsubsection{Silicon Made sensors}
+\subsubsection{Touch sensors}
 
-\subsubsection{Sonification on micro-controllers}
-MCUs\footnote{Micro-controllers} \cite{rochim2019design} is a kind of small computer.
+Usual sensors uses physical properties to capture the data. For instance, in 1999, Hinckley and al. \cite{hinckleyTouchsensingInputDevices1999} 
+were building a touch sensor made of conductive paint. The conductive paint is used as an electrode.
+In the circuit, a component is generating a 30 Hertz square signal. When the user interact with the conductive surface,
+it shifts and induce delay in the square wave. The delay induce by the user hands is caused by its natural
+capacitance. This circuit, however, gives a boolean output based on a threshold. The answer is \textit{touched}
+or \textit{untouched}. % Evoke the "The present work has demonstrated that touch-sensing is an
+% orthogonal property of input devices that does not
+% necessarily have to be coupled with position sensing
+
+When thinking of touch sensors, we think about the trackpad/touchpad that we daily use in our personal 
+computer. Those sensors use resistive or capacitive sensing. Both of these techniques are based on electrical
+properties. Resistive sensing is based on the perturbation of the resistance in a circuit. Whereas 
+capacitive is based on the capacitance. Capturing those specific properties are usually the basic of 
+touch sensors.
+
+For instance, Olberding and al. created a cuttable multitouch sensor based on capacitive sensor \cite{olberdingCuttableMultitouchSensor2013}.
+This specific sensor allows to create something similar to a trackpad but with different shapes.
+
+Reading the capacitance at a fixed frequency is working and is already used in our daily lives. 
+However, to capture more complex interaction and to rely on the data, adding another dimension of data is useful.
+Swept Frequency Capacitive sensing consists on emitting a electrical signal and then read the capacitive values
+similar to what a classic sensor would do. However, the electrical signal is not generated at a fix frequency
+but is generated following a changing frequency. 
+Sato and al. introduced first this technique in the \texit{touché} device \cite{satoToucheEnhancingTouch2012}.
+This allows to get richer information on the output of the device. \textit{Touché} allows then to capture 
+the information on a variety and a multitude of daily objects.
+Indeed, searching through many frequencies make it simpler to find small changes and though different kind and type 
+of interactions.
+
+\subsubsection{Sonification on microcontrollers}
+
+MCUs\footnote{microcontrollers} \cite{rochim2019design} is a kind of small computer.
 Those devices can be used to generate sound. The most common way of doing electronical music
 is to use MIDI\footnote{Musical Instrument Digital Interface} \cite{loyMusiciansMakeStandard1985}.
 MIDI has been created in order to create music with digital computer. MIDI do not describe directly 
