@@ -15,7 +15,39 @@ This project includes:
 
 \subsection{Communication}
 
+The communication system is based on WiFi technology. The ESP32 has specific wireless capabilities.
+The server and the ESP32 devices are connected to the same network.
+The ESP32 sends the raw data to the server using IP\footnote{Internet Protocol}. This is done
+through a TCP \footnote{Transmission Control Protocol} socket open between the server and one ESP32.
+The server can open as many socket as there are clients. The data sent using a string.
+A "#" start character and a ";\\n" stop character are used to prevent the messages to 
+be truncated and still processed on the server side. The IP protocol (whether it is on WiFi
+or Ethernet) has been chosen for this application for several reasons:
+
+\begin{itemize}
+    \item Allow high bandwidth
+    \item Available in most places
+    \item Allow connection of multiple devices
+    \item Already available on the server and on the ESP32
+\end{itemize}
+
+Other communication protocol have been benchmarked. Here is a table that summarizes
+the choice: 
+
+\begin{table}[h!]
+    \begin{tabular}{lllll}
+    Protocol                            & IP (WiFi/Ethernet) & Bluetooth & BLE   & Zigbee \\
+    Handle multiple connections         & Yes                & No        & No    & Yes    \\
+    Requires additional hardware        & No                 & No        & No    & Yes    \\
+    Subject to interference             & Yes                & Few       & Few   & Yes    \\
+    Energy efficiency (using a battery) & Days               & Months    & Years & Years 
+    \end{tabular}
+\end{table}
+
+The result of this table confirms that WiFi is the right choice for our specific application.
 \subsection{Server}
+
+The server is a small fanless computer running Lubuntu. 
 
 \subsection{Deployment and application}
 
