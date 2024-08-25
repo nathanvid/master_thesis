@@ -47,7 +47,34 @@ the choice:
 The result of this table confirms that WiFi is the right choice for our specific application.
 \subsection{Server}
 
-The server is a small fanless computer running Lubuntu. 
+The server is a small fanless computer running Lubuntu. Lubuntu is a lighter version of Ubuntu
+that includes LXQt as desktop environnement. The choice of a distribution with graphical
+interface is induced by the use of \textit{Pure Data} as sonification software.
+
+Pure Data (PD) is an open-source visual programming language designed primarily for 
+creating interactive multimedia applications, particularly in the fields of audio, video, 
+and graphical processing.
+Pure Data is part of a family of patcher programming languages, which also includes Max/MSP.
+Unlike traditional text-based programming, PD uses a graphical interface where users connect 
+"objects" with virtual patch cables to create complex data flows and signal processing chains. 
+Its modular design allows for real-time manipulation of sound and graphics, making it a powerful 
+tool for artists, musicians, and researchers interested in exploring experimental media. 
+
+Pure Data requires, in a development environnement, a graphical interface to test and debug.
+The Pure Data patch receive the data through a TCP socket. The data is processed through several 
+operations. Then, if a threshold is passed, an interaction happened and the music is triggered.
+The music is outputted through the item \textit{dac} which means Digital to Analog Converter. 
+The digital input from pure data is converted to a sound that speakers can output.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{pure_data_patch.png}
+    \caption{Basic \textit{Pure Data} patch that is used for sonification of the data
+    of the plant. In case of an art exhibition, the Pure Data patch is can be upgraded} 
+    \vspace{0.1cm}
+    \label{fig:pure_data_patch}
+\end{figure}
+
 
 \subsection{Deployment and application}
 
