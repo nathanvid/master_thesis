@@ -31,7 +31,7 @@ or Ethernet) has been chosen for this application for several reasons:
     \item Already available on the server and on the ESP32
 \end{itemize}
 
-Other communication protocol have been benchmarked. Here is a table that summarizes
+Other communication protocols have been benchmarked. Here is a table that summarizes
 the choice: 
 
 \begin{table}[h!]
@@ -63,16 +63,34 @@ tool for artists, musicians, and researchers interested in exploring experimenta
 Pure Data requires, in a development environnement, a graphical interface to test and debug.
 The Pure Data patch receive the data through a TCP socket. The data is processed through several 
 operations. Then, if a threshold is passed, an interaction happened and the music is triggered.
-The music is outputted through the item \textit{dac} which means Digital to Analog Converter. 
+The music is outputted through the item \textit{DAC} which means Digital to Analog Converter. 
 The digital input from pure data is converted to a sound that speakers can output.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{pure_data_patch.png}
     \caption{Basic \textit{Pure Data} patch that is used for sonification of the data
-    of the plant. In case of an art exhibition, the Pure Data patch is can be upgraded} 
+    of the plant. In case of an art exhibition, the Pure Data patch can be upgraded to meet the
+    artist needs} 
     \vspace{0.1cm}
     \label{fig:pure_data_patch}
+\end{figure}
+
+
+Pure Data is a sonification software that require data as input. In order to get and process the data,
+we designed a Python based software.
+The software is object oriented. The standalone IoP modules connect using WiFi to the receiver module
+of the software. The connection is made using TCP socket from the ESP32 to the server.
+The main module of the software then creates software abstraction of the standalone module. 
+The abstraction module is processing and storing all the processed data.
+The main module then send the processed data to Pure Data patch using also local TCP socket.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{iop_architecture.png}
+    \caption{Architecture diagram of Internet of Plants project centered on server-side.} 
+    \vspace{0.1cm}
+    \label{fig:server_architecture}
 \end{figure}
 
 
