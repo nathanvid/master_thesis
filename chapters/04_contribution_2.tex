@@ -94,11 +94,49 @@ The main module then send the processed data to Pure Data patch using also local
 \end{figure}
 
 
-\subsection{Deployment and application}
+\subsection{Deployment} %and application}
+
+The server software is easily deployable. The software includes a shell script to deploy the server service.
+Indeed, the server relies on a \textit{systemd} linux service. \textit{Systemd} \cite{Both2020} is a
+Linux software that manage application that runs \textit{daemons} or services.
+\textit{Daemons} are pieces of software that run in background of the operating
+system. They are mainly started at the during the boot of the operating system.
+
+The server is deployed that way so the software starts with the operating system.
+It waits for the network interfaces to be up and running and opens the socket.
+The installation tool install Python dependencies, fill in the templated service file,
+install the service and enable it. The server is able to receive data from IoP standalone
+modules and use Pure Data software for sonification. The last step is to connect
+a jack speaker to the jack builtin output.
+
+On the IoP standalone module side, it requires a software that is able to upload 
+firmware to an ESP32 MCU. I recommend using PlatformIO which is an open source 
+embedded software development platform. The firmware is developed using this platform.
+The source code is written in C++ using the Arduino framework. You flash the firmware
+to the chip after setting up the WiFi credentials.
+The module sends all the retrieved data to the server.
 
 \subsubsection{Distributed instruments}
 
+This IoP architecture enables possibilities on deploying a distributed instrument.
+It is possible to deploy several IoP modules, in different plants and build a 
+
 \subsubsection{Art exhibition}
+
+To push further the distributed instrument, it is possible to build an entire 
+musical experience for an art exhibition.
+The immersive experience can take place as a fully connected forest. The music would vary
+depending on the touch interaction that people have with the plants.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{art_exhibition.pdf}
+    \caption{Schematic of the IoP art exhibition. The music varies depending on the 
+    interaction that people have with the installation. People are immersed into the full
+    musical and sonification experience.} 
+    \vspace{0.1cm}
+    \label{fig:art_exhibition}
+\end{figure}
 
 \subsection{Conclusion}
 
