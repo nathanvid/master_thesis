@@ -18,7 +18,7 @@ The core of the circuit is the computation part, including the microcontroller, 
 devices of the circuit are connected to the ESP32. The choice to use a devkit has been done 
 to ease the electronic conception and to avoid any communication and soldering issue with the MCU\footnote[1]{Microcontroller Unit}.
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{images/iop.pdf}
     \caption{The core of the circuit, the microcontroller, an ESP32 Wroom 32. All the other parts of
@@ -32,7 +32,7 @@ This filter has been designed by \textit{Jakub Nikonowicz} and \textit{Łukasz M
 from \textit{Politechnika Poznańska}.
 Thanks to them, I adapted it for my application on my embedded device. 
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{images/iop-plant_filter.pdf}
     \caption{The electronic circuit designed to capture the interaction by analyzing the electronic
@@ -45,7 +45,7 @@ The last part of the circuit is the sound output/rendering. This circuit include
 the LM386 from Texas Instruments. The rest of the circuit are components needed in order to 
 induce amplification on the signal without creating to many noise and saturation.
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{images/iop-audio_circuit.pdf}
     \caption{The sound output part of the circuit that is used to render the sound. 
@@ -59,7 +59,7 @@ induce amplification on the signal without creating to many noise and saturation
 Once the schematic is done, we have to route the tracks. It exists multiple way to route PCB 
 (single-sided, double-sided, multiple layers). We choose double sided, 2 layers on each side of the PCB.
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{images/iop-routed_pcb.pdf}
     \caption{The routed double sided PCB.} 

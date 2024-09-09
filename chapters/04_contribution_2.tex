@@ -34,14 +34,17 @@ or Ethernet) has been chosen for this application for several reasons:
 Other communication protocols have been benchmarked. Here is a table that summarizes
 the choice: 
 
-\begin{table}[h!]
-    \begin{tabular}{lllll}
-    Protocol                            & IP (WiFi/Ethernet) & Bluetooth & BLE   & Zigbee \\
-    Handle multiple connections         & Yes                & No        & No    & Yes    \\
-    Requires additional hardware        & No                 & No        & No    & Yes    \\
-    Subject to interference             & Yes                & Few       & Few   & Yes    \\
-    Energy efficiency (using a battery) & Days               & Months    & Years & Years 
+\begin{table}[]
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    Protocol                            & IP   & Bluetooth & BLE   & Zigbee \\ \hline
+    Handle multiple connections         & Yes  & No        & No    & Yes    \\
+    Requires additional hardware        & No   & No        & No    & Yes    \\
+    Subject to interference             & Yes  & Few       & Few   & Yes    \\
+    Energy efficiency (using a battery) & Days & Months    & Years & Years  \\ \hline
     \end{tabular}
+    \caption{Comparison between different communication protocol to find the one that will suits our needs the best.}
+    \label{tab:protocol_comparison}
 \end{table}
 
 The result of this table confirms that WiFi is the right choice for our specific application.
@@ -128,7 +131,7 @@ musical experience for an art exhibition.
 The immersive experience can take place as a fully connected forest. The music would vary
 depending on the touch interaction that people have with the plants.
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{art_exhibition.pdf}
     \caption{Schematic of the IoP art exhibition. The music varies depending on the 
@@ -137,6 +140,17 @@ depending on the touch interaction that people have with the plants.
     \vspace{0.1cm}
     \label{fig:art_exhibition}
 \end{figure}
+
+This exhibition could allow people to rethink the way the see and interact with plants.
+Plants are not seen anymore as decoration object but as a living being.
+The living being is here highlighted by the fact that plants can now express their state.
+The humidity level, the light intensity and other state signs are modifying the plant 
+reaction.
+
+
+Musicians can also work in pair with plants to create songs using music from the plants.
+The music coming from the plant is fully configurable with the sonification software.
+
 
 \subsection{Conclusion}
 
