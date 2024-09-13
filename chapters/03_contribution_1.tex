@@ -18,54 +18,56 @@ The core of the circuit is the computation part, including the microcontroller, 
 devices of the circuit are connected to the ESP32. The choice to use a devkit has been done 
 to ease the electronic conception and to avoid any communication and soldering issue with the MCU\footnote[1]{Microcontroller Unit}.
 
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=\textwidth]{images/iop.pdf}
-%     \caption{The core of the circuit, the microcontroller, an ESP32 Wroom 32. All the other parts of
-%     circuits are plugged in.} 
-%     \vspace{0.1cm}
-%     \label{fig:iop_schematic_main}
-% \end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/iop.pdf}
+    \caption{The core of the circuit, the microcontroller, an ESP32 Wroom 32. All the other parts of
+    circuits are plugged in.} 
+    \vspace{0.1cm}
+    \label{fig:iop_schematic_main}
+\end{figure}
 
 The circuit component that allows us to read data from the plant is the electronic filter.
 This filter has been designed by \textit{Jakub Nikonowicz} and \textit{Łukasz Matuszewski} 
 from \textit{Politechnika Poznańska}.
 Thanks to them, I adapted it for my application on my embedded device. 
 
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=\textwidth]{images/iop-plant_filter.pdf}
-%     \caption{The electronic circuit designed to capture the interaction by analyzing the electronic
-%     frequency response. The circuit includes 3 resistors, 3 inductors and 3 capacitors as main components} 
-%     \vspace{0.1cm}
-%     \label{fig:iop_schematic_filter}
-% \end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/iop-plant_filter.pdf}
+    \caption{The electronic circuit designed to capture the interaction by analyzing the electronic
+    frequency response. The circuit includes 3 resistors, 3 inductors and 3 capacitors as main components} 
+    \vspace{0.1cm}
+    \label{fig:iop_schematic_filter}
+\end{figure}
+
+This filter is ending by a crocodile clamp that is directly connected to the plant.
 
 The last part of the circuit is the sound output/rendering. This circuit includes a small amplifier,
 the LM386 from Texas Instruments. The rest of the circuit are components needed in order to 
 induce amplification on the signal without creating to many noise and saturation.
 
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=\textwidth]{images/iop-audio_circuit.pdf}
-%     \caption{The sound output part of the circuit that is used to render the sound. 
-%     This part includes a small amplifier, the LM386. The circuit also includes the components necessary
-%     to control and handle the amplification (reduce noise and saturation)} 
-%     \vspace{0.1cm}
-%     \label{fig:iop_schematic_audio}
-% \end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/iop-audio_circuit.pdf}
+    \caption{The sound output part of the circuit that is used to render the sound. 
+    This part includes a small amplifier, the LM386. The circuit also includes the components necessary
+    to control and handle the amplification (reduce noise and saturation)} 
+    \vspace{0.1cm}
+    \label{fig:iop_schematic_audio}
+\end{figure}
 
 
 Once the schematic is done, we have to route the tracks. It exists multiple way to route PCB 
 (single-sided, double-sided, multiple layers). We choose double sided, 2 layers on each side of the PCB.
 
-% \begin{figure}[h!]
-%     \centering
-%     \includegraphics[width=\textwidth]{images/iop-routed_pcb.pdf}
-%     \caption{The routed double sided PCB.} 
-%     \vspace{0.1cm}
-%     \label{fig:iop_routed_pcb}
-% \end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/iop-routed_pcb.pdf}
+    \caption{The routed double sided PCB.} 
+    \vspace{0.1cm}
+    \label{fig:iop_routed_pcb}
+\end{figure}
 
 Kicad also allows us to generated a 3D view of the future PCB. This allows us to imagine what the
 PCB will look like when it will be manufactured.
@@ -78,7 +80,11 @@ PCB will look like when it will be manufactured.
 \end{figure}
 
 \subsection{Human interaction}
-\subsubsection{ezaea}
+
+The device is able to capture the human interaction with the plant. The touch interaction is inducing changes
+in the impedance, capacitance and inductance of the plant. Values are captured.
+
+\subsubsection{Sonification on the device}
 \newpage
 \subsubsection{User study}
 \input{chapters/user_study}
