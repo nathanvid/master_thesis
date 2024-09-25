@@ -122,7 +122,12 @@ The module sends all the retrieved data to the server.
 \subsubsection{Distributed instruments}
 
 This IoP architecture enables possibilities on deploying a distributed instrument.
-It is possible to deploy several IoP modules, in different plants and build a 
+It is possible to deploy several IoP standalone modules, in different plants and build a entire musical instrument.
+Modules reach out to the server and the server link an ID to the different connected devices.
+The data is sent to Pure Data and using the software, you can create many sounds depending on the 
+module (and thus plant) origin. Pure Data offers a fine control over pitch, sound, rhythm, tone and much more.
+
+\subsection{output}
 
 \subsubsection{Art exhibition}
 
@@ -151,6 +156,29 @@ reaction.
 Musicians can also work in pair with plants to create songs using music from the plants.
 The music coming from the plant is fully configurable with the sonification software.
 
+
+\subsubsection{Final product, limitations and future work}
+
+Final product is a software that allows the connection between multiple standalone IoP modules and a sonification
+software, Pure Data. The software handle multiple connection and apply a filtering and cleaning on the data 
+retrieved. The data is then sent to Pure Data for sonification.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/standalone_demo.jpg}
+    \caption{Server-module demo. In this specific use case, the module is connected by wire to a computer.
+    Otherwise, the module is usable wirelessly. 
+    The computer is acting as a server.
+    On this version of the demo, the screen is displaying a figure that is evolving depending on the touch interaction.
+    The computer, acting as the server, is producing the sound using Pure Data software.} 
+    \vspace{0.1cm}
+    \label{fig:standalone_demo}
+\end{figure}
+
+On the limitation side, the use of WiFi ease a lot the deployment of the system, however 
+% TODO: Talk about overcrowded wifi
+% talk about frame dropped and lost. 
+% Talk about the start and stop tag to check if frame is entire
 
 \subsection{Conclusion}
 
