@@ -12,7 +12,7 @@ device is composed of 3 main parts:
 \end{itemize}
 
 The design of the PCB has been done using the open source software Kicad.
-As said previously, the circuit contain 3 parts.
+As said previously, the circuit contains 3 parts.
 
 The core of the circuit is the computation part, including the microcontroller, an ESP32. All the other
 devices of the circuit are connected to the ESP32. The choice to use a devkit has been done 
@@ -21,11 +21,14 @@ to ease the electronic conception and to avoid any communication and soldering i
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{images/iop.pdf}
-    \caption{The core of the circuit, the microcontroller, an ESP32 Wroom 32. All the other parts of
-    circuits are plugged in.} 
+    \caption{The main schematic of the device. This main schematic regroups components and sub-sheets (including the audio circuit
+    and the filter circuit). The main component is an ESP32 Wroom DevKit. All other components are linked to this
+    microcontroller} 
     \vspace{0.1cm}
     \label{fig:iop_schematic_main}
 \end{figure}
+
+%TODO: Talk about the humidity sensor
 
 The circuit component that allows us to read data from the plant is the electronic filter.
 This filter has been designed by \textit{Jakub Nikonowicz} and \textit{Łukasz Matuszewski} 
@@ -57,6 +60,10 @@ induce amplification on the signal without creating to many noise and saturation
     \label{fig:iop_schematic_audio}
 \end{figure}
 
+The PCB is built to be able to add a micro-SD slot (ref to \ref{fig:iop_schematic_main}). This micro-SD slot
+allows to increase the storage of the embedded ROM. This can be used to store pre-built sounds and music 
+to avoid generating a sound on-board.  
+
 
 Once the schematic is done, we have to route the tracks. It exists multiple way to route PCB 
 (single-sided, double-sided, multiple layers). We choose double sided, 2 layers on each side of the PCB.
@@ -81,6 +88,8 @@ PCB will look like when it will be manufactured.
 
 \subsection{Human interaction}
 
+\subsubsection{Use of the sensor/filter}
+
 The device is able to capture the human interaction with the plant. The touch interaction is inducing changes
 in the impedance, capacitance and inductance of the plant. Values are captured using the GPIO (General Port Input/Output)
 14 of the ESP32 DevKit. This GPIO is able to read analog data and convert them to digital values using analog to digital
@@ -93,6 +102,38 @@ The possibilities of
 
 
 \subsubsection{Sonification on the device} % FIXME: subsubsection ??
+
+The human interaction goes through the sonification on the device. ESP32 embeds a 8-bit digital to analog converter (DAC).
+The embed DAC is enough to play low quality sounds. Combined with the micro-SD card including in it, it is a media player.
+Using the \textit{Arduino Audio Tools} library it is possible to read MP3, Wav and other audio format.
+Taking the sensor value as an input, you can then apply a pitch shift on the data that will be rendered on the DAC.
+The pitch shift is a value included between 0 and 100. We are mapping the max value of the sensor and the min value
+to this range using the \textit{map()} Arduino function.
+
+The data is sent to the DAC and rendered. \textit{Arduino Audio Tools} also includes a way to communicate data to the
+DAC.
+
+%TODO: Add oscilloscope screenshot of the sound output.
+
+There are two DAC available on the ESP32. DAC 1 and DAC 2 respectively on GPIO25 and GPIO26. The IoP device allows
+to choose between the one you want by using a removable jumper.
+
+The output of the DAC is too low to be able to render it on a speaker. The amplification circuit allows a small 
+amplification of the output. The amplifier is a basic and simple one. I added a 10k Ohms potentiometer to be able to
+tweak the volume. The sound quickly reach amplifier limitations and is becoming saturated. 
+
+The amplified output is sent to a terminal block that acts as the connection interface to the audio speaker.
+The audio speaker chosen in our specific example is a 8 Ohms 3 Watts speaker. 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/speaker.jpg}
+    \caption{8 ohms 3 Watts basic speaker used in our example.} 
+    \vspace{0.1cm}
+    \label{fig:speaker}
+\end{figure}
+
+
 \newpage
 \subsubsection{User study}
 \input{chapters/user_study}
