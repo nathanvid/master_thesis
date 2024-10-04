@@ -1,5 +1,11 @@
 \section{Plant as sensor}
 
+\subsection{Technical choices}
+
+Before diving into the implementation, several technical choices were made to shape the overall design of the system. The first major decision was selecting the ESP32 microcontroller as the core processing unit due to its versatility, offering built-in WiFi, multiple GPIO pins, and analog-to-digital converters, which allow for handling sensor data and wireless communication efficiently.
+
+Additionally, the system's audio capabilities were a critical consideration, leading to the inclusion of a basic amplification circuit to boost sound output, ensuring compatibility with external speakers. The design also included a micro-SD slot to allow for expandable storage, enabling future enhancements like storing pre-recorded sounds or more detailed data logs. These foundational decisions laid the groundwork for a scalable and reliable system, ensuring smooth integration of the components that follow in the implementation.
+
 \subsection{The electronic interface}
 
 The electronic interface is the interface that allows a compute unit to capture and interpret the plant signal and
@@ -35,7 +41,7 @@ This filter has been designed by \textit{Jakub Nikonowicz} and \textit{Łukasz M
 from \textit{Politechnika Poznańska}.
 Thanks to them, I adapted it for my application on my embedded device. 
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/iop-plant_filter.pdf}
     \caption{The electronic circuit designed to capture the interaction by analyzing the electronic
@@ -50,7 +56,7 @@ The last part of the circuit is the sound output/rendering. This circuit include
 the LM386 from Texas Instruments. The rest of the circuit are components needed in order to 
 induce amplification on the signal without creating to many noise and saturation.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/iop-audio_circuit.pdf}
     \caption{The sound output part of the circuit that is used to render the sound. 
@@ -61,24 +67,24 @@ induce amplification on the signal without creating to many noise and saturation
 \end{figure}
 
 The PCB is built to be able to add a micro-SD slot (ref to \ref{fig:iop_schematic_main}). This micro-SD slot
-allows to increase the storage of the embedded ROM. This can be used to store pre-built sounds and music 
-to avoid generating a sound on-board.  
+allows to increase the storage of the embedded ROM. This can be used to store pre-built sounds and music to avoid generating a sound on-board.  
 
 
-Once the schematic is done, we have to route the tracks. It exists multiple way to route PCB 
-(single-sided, double-sided, multiple layers). We choose double sided, 2 layers on each side of the PCB.
+Once the schematic was completed, the next step was routing the tracks. There are several methods for PCB routing, including single-sided, double-sided, and multiple-layer designs. We opted for a double-sided PCB on each side because this configuration simplifies component placement, making the layout more efficient and organized. Additionally, it is significantly more cost-effective compared to multi-layer PCBs, striking a good balance between performance and budget. Indeed, in terms of routing, PCBs can be single-sided, double-sided, or multi-layered. Single-sided boards are simple and low-cost but limited in complexity. Double-sided PCBs, with copper on both sides, allow for more efficient routing and are commonly used for moderate complexity. Multi-layered PCBs offer even greater routing density, suitable for advanced electronics such as computer motherboards or phone components.
 
-\begin{figure}[h!]
+In terms of track width, we used 0.2mm wide tracks for data signals to maintain signal integrity, while the power tracks were designed with a width of 0.8mm. This wider width ensures that the power tracks can safely handle up to 800 mA, providing sufficient current capacity without overheating or voltage drops.
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/iop-routed_pcb.pdf}
-    \caption{The routed double sided PCB.} 
+    \caption{Double sided PCB routed. This view allows to see the track used for components inter-connection. The tracks width is 0.2mm for data tracks and 0.8mm for power tracks.} 
     \vspace{0.1cm}
     \label{fig:iop_routed_pcb}
 \end{figure}
 
 Kicad also allows us to generated a 3D view of the future PCB. This allows us to imagine what the
 PCB will look like when it will be manufactured.
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/front_iop_3D_view_modified.png}
     \caption{Front 3D rendering of the built PCB. The rendering is done using open source software: Kicad} 
