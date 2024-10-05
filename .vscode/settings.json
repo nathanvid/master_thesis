@@ -6,5 +6,6 @@
     ],
     "cSpell.ignoreWords": [
         "Ballora"
-    ]
+    ],
+    "latex-workshop.latex.autoBuild.run": "never"
 }
