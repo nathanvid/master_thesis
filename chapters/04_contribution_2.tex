@@ -15,24 +15,8 @@ This project includes:
 
 \subsection{Communication}
 
-The communication system is based on WiFi technology. The ESP32 has specific wireless capabilities.
-The server and the ESP32 devices are connected to the same network.
-The ESP32 sends the raw data to the server using IP\footnote{Internet Protocol}. This is done
-through a TCP \footnote{Transmission Control Protocol} socket open between the server and one ESP32.
-The server can open as many socket as there are clients. The data sent using a string.
-A "#" start character and a ";\\n" stop character are used to prevent the messages to 
-be truncated and still processed on the server side. The IP protocol (whether it is on WiFi
-or Ethernet) has been chosen for this application for several reasons:
-
-\begin{itemize}
-    \item Allow high bandwidth
-    \item Available in most places
-    \item Allow connection of multiple devices
-    \item Already available on the server and on the ESP32
-\end{itemize}
-
-Other communication protocols have been benchmarked. Here is a table that summarizes
-the choice: 
+On the communication side, we benchmarked several communication protocol including internet protocol,
+Bluetooth, Bluetooth Low Energy and Zigbee (ref to table \ref{tab:protocol_comparison}).
 
 \begin{table}[]
     \begin{tabular}{|l|l|l|l|l|}
@@ -43,20 +27,34 @@ the choice:
     Subject to interference             & Yes  & Few       & Few   & Yes    \\
     Energy efficiency (using a battery) & Days & Months    & Years & Years  \\ \hline
     \end{tabular}
-    \caption{Comparison between different communication protocol to find the one that will suits our needs the best.}
+    \caption{Comparison between different communication protocol to find the one that will suits our needs.}
     \label{tab:protocol_comparison}
 \end{table}
 
-The result of this table confirms that WiFi is the right choice for our specific application.
+The IP protocol (whether it is on WiFi or Ethernet) has been chosen for this application for several reasons:
+
+\begin{itemize}
+    \item High bandwidth: It supports the transmission of large amounts of data quickly and efficiently, which is essential for real-time interactions in the system.
+    \item Widespread availability: WiFi and Ethernet are commonly available in most exhibition spaces, ensuring easy deployment in a variety of environments.
+    \item Multi-device connectivity: The protocol allows the connection of multiple devices simultaneously, which is crucial for building a distributed system where many plants can interact with the server.
+    \item Compatibility: Ethernet is already available on the server, and WiFi is built into the ESP32, eliminating the need for additional hardware.
+\end{itemize}
+
+The communication system is based on WiFi technology, leveraging the ESP32's built-in wireless capabilities. Both the server and the ESP32 devices are connected to the same local network. Data is transmitted from the ESP32 to the server using the IP protocol via a TCP (Transmission Control Protocol) socket. Each ESP32 opens a dedicated TCP socket to the server, and the server is capable of handling multiple sockets simultaneously—one for each connected device.
+
+However, a potential drawback of using IP networks is that they can become overcrowded, especially in environments with high network traffic, which may lead to packet loss or truncated data frames. To mitigate these issues, a start ("#") and stop (";\\n") character is embedded in the data transmission protocol. This structure helps the server recognize the beginning and end of each message, allowing it to discard incomplete or corrupted frames and process only complete, intact data. This approach minimizes the impact of network congestion by ensuring that even if a frame is truncated or lost, the server can still recover and process the next full message without error.
+
+Additionally, this strategy helps maintain a balance within the CAP theorem (Consistency, Availability, and Partition tolerance). While it is impossible to achieve all three properties perfectly in a distributed system, the chosen protocol structure ensures data consistency by filtering out incomplete messages, availability by maintaining active connections across multiple devices, and some degree of partition tolerance in the event of temporary network failures. This balance is critical for ensuring reliable data transmission and processing in the Internet of Plants system.
+
+
+
 \subsection{Server}
 
 The server is a small fanless computer running Lubuntu. Lubuntu is a lighter version of Ubuntu
 that includes LXQt as desktop environnement. The choice of a distribution with graphical
 interface is induced by the use of \textit{Pure Data} as sonification software.
 
-Pure Data (PD) is an open-source visual programming language designed primarily for 
-creating interactive multimedia applications, particularly in the fields of audio, video, 
-and graphical processing.
+Pure Data (PD) is an open-source visual programming language designed primarily for creating interactive multimedia applications, particularly in the fields of audio, video, and graphical processing.
 Pure Data is part of a family of patcher programming languages, which also includes Max/MSP.
 Unlike traditional text-based programming, PD uses a graphical interface where users connect 
 "objects" with virtual patch cables to create complex data flows and signal processing chains. 
@@ -121,11 +119,9 @@ The module sends all the retrieved data to the server.
 
 \subsubsection{Distributed instruments}
 
-This IoP architecture enables possibilities on deploying a distributed instrument.
-It is possible to deploy several IoP standalone modules, in different plants and build a entire musical instrument.
-Modules reach out to the server and the server link an ID to the different connected devices.
-The data is sent to Pure Data and using the software, you can create many sounds depending on the 
-module (and thus plant) origin. Pure Data offers a fine control over pitch, sound, rhythm, tone and much more.
+The Internet of Plants (IoP) architecture enables the creation of a distributed instrument, where multiple IoP standalone modules can be deployed across different plants to form an interconnected musical system. Each module, linked to the server via WiFi, sends data collected from plant interactions, which the server then processes. By assigning unique IDs to each module, the server can differentiate between the various plants, allowing for distinct musical outputs based on the origin of the data.
+
+The system sends this data to Pure Data (PD), an open-source visual programming language for multimedia applications, where sound parameters such as pitch, tone, and rhythm can be finely controlled. This setup allows for highly customizable soundscapes, where each plant generates unique sounds based on user interaction, creating a rich, immersive musical experience. The distributed instrument thus transforms the interaction with plants into a collaborative musical performance, opening up new possibilities for art installations and interactive environments.
 
 \subsection{output}
 
