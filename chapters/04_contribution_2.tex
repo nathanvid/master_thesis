@@ -20,12 +20,12 @@ Bluetooth, Bluetooth Low Energy and Zigbee (ref to table \ref{tab:protocol_compa
 
 \begin{table}[]
     \begin{tabular}{|l|l|l|l|l|}
-    \hline
-    Protocol                            & IP   & Bluetooth & BLE   & Zigbee \\ \hline
-    Handle multiple connections         & Yes  & No        & No    & Yes    \\
-    Requires additional hardware        & No   & No        & No    & Yes    \\
-    Subject to interference             & Yes  & Few       & Few   & Yes    \\
-    Energy efficiency (using a battery) & Days & Months    & Years & Years  \\ \hline
+        \hline
+        Protocol                            & IP   & Bluetooth & BLE   & Zigbee \\ \hline
+        Handle multiple connections         & Yes  & No        & No    & Yes    \\
+        Requires additional hardware        & No   & No        & No    & Yes    \\
+        Subject to interference             & Yes  & Few       & Few   & Yes    \\
+        Energy efficiency (using a battery) & Days & Months    & Years & Years  \\ \hline
     \end{tabular}
     \caption{Comparison between different communication protocol to find the one that will suits our needs.}
     \label{tab:protocol_comparison}
@@ -56,23 +56,23 @@ interface is induced by the use of \textit{Pure Data} as sonification software.
 
 Pure Data (PD) is an open-source visual programming language designed primarily for creating interactive multimedia applications, particularly in the fields of audio, video, and graphical processing.
 Pure Data is part of a family of patcher programming languages, which also includes Max/MSP.
-Unlike traditional text-based programming, PD uses a graphical interface where users connect 
-"objects" with virtual patch cables to create complex data flows and signal processing chains. 
-Its modular design allows for real-time manipulation of sound and graphics, making it a powerful 
-tool for artists, musicians, and researchers interested in exploring experimental media. 
+Unlike traditional text-based programming, PD uses a graphical interface where users connect
+"objects" with virtual patch cables to create complex data flows and signal processing chains.
+Its modular design allows for real-time manipulation of sound and graphics, making it a powerful
+tool for artists, musicians, and researchers interested in exploring experimental media.
 
 Pure Data requires, in a development environnement, a graphical interface to test and debug.
-The Pure Data patch receive the data through a TCP socket. The data is processed through several 
+The Pure Data patch receive the data through a TCP socket. The data is processed through several
 operations. Then, if a threshold is passed, an interaction happened and the music is triggered.
-The music is outputted through the item \textit{DAC} which means Digital to Analog Converter. 
+The music is outputted through the item \textit{DAC} which means Digital to Analog Converter.
 The digital input from pure data is converted to a sound that speakers can output.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{pure_data_patch.png}
     \caption{Basic \textit{Pure Data} patch that is used for sonification of the data
-    of the plant. In case of an art exhibition, the Pure Data patch can be upgraded to meet the
-    artist needs} 
+        of the plant. In case of an art exhibition, the Pure Data patch can be upgraded to meet the
+        artist needs}
     \vspace{0.1cm}
     \label{fig:pure_data_patch}
 \end{figure}
@@ -82,14 +82,14 @@ Pure Data is a sonification software that require data as input. In order to get
 we designed a Python based software. %FIXME: microservices
 The software is object oriented. The standalone IoP modules connect using WiFi to the receiver module
 of the software. The connection is made using TCP socket from the ESP32 to the server.
-The main module of the software then creates software abstraction of the standalone module. 
+The main module of the software then creates software abstraction of the standalone module.
 The abstraction module is processing and storing all the processed data.
 The main module then send the processed data to Pure Data patch using also local TCP socket.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{iop_architecture.png}
-    \caption{Architecture diagram of Internet of Plants project centered on server-side.} 
+    \caption{Architecture diagram of Internet of Plants project centered on server-side.}
     \vspace{0.1cm}
     \label{fig:server_architecture}
 \end{figure}
@@ -110,8 +110,8 @@ install the service and enable it. The server is able to receive data from IoP s
 modules and use Pure Data software for sonification. The last step is to connect
 a jack speaker to the jack builtin output.
 
-On the IoP standalone module side, it requires a software that is able to upload 
-firmware to an ESP32 MCU. I recommend using PlatformIO which is an open source 
+On the IoP standalone module side, it requires a software that is able to upload
+firmware to an ESP32 MCU. I recommend using PlatformIO which is an open source
 embedded software development platform. The firmware is developed using this platform.
 The source code is written in C++ using the Arduino framework. You flash the firmware
 to the chip after setting up the WiFi credentials.
@@ -127,7 +127,7 @@ The system sends this data to Pure Data (PD), an open-source visual programming 
 
 \subsubsection{Art exhibition}
 
-To push further the distributed instrument, it is possible to build an entire 
+To push further the distributed instrument, it is possible to build an entire
 musical experience for an art exhibition.
 The immersive experience can take place as a fully connected forest. The music would vary
 depending on the touch interaction that people have with the plants.
@@ -135,9 +135,9 @@ depending on the touch interaction that people have with the plants.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{art_exhibition.pdf}
-    \caption{Schematic of the IoP art exhibition. The music varies depending on the 
-    interaction that people have with the installation. People are immersed into the full
-    musical and sonification experience.} 
+    \caption{Schematic of the IoP art exhibition. The music varies depending on the
+        interaction that people have with the installation. People are immersed into the full
+        musical and sonification experience.}
     \vspace{0.1cm}
     \label{fig:art_exhibition}
 \end{figure}
@@ -145,7 +145,7 @@ depending on the touch interaction that people have with the plants.
 This exhibition could allow people to rethink the way the see and interact with plants.
 Plants are not seen anymore as decoration object but as a living being.
 The living being is here highlighted by the fact that plants can now express their state.
-The humidity level, the light intensity and other state signs are modifying the plant 
+The humidity level, the light intensity and other state signs are modifying the plant
 reaction.
 
 
@@ -156,17 +156,13 @@ The music coming from the plant is fully configurable with the sonification soft
 \subsubsection{Final product, limitations and future work}
 
 Final product is a software that allows the connection between multiple standalone IoP modules and a sonification
-software, Pure Data. The software handle multiple connection and apply a filtering and cleaning on the data 
+software, Pure Data. The software handle multiple connection and apply a filtering and cleaning on the data
 retrieved. The data is then sent to Pure Data for sonification.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{images/standalone_demo.jpg}
-    \caption{Server-module demo. In this specific use case, the module is connected by wire to a computer.
-    Otherwise, the module is usable wirelessly. 
-    The computer is acting as a server.
-    On this version of the demo, the screen is displaying a figure that is evolving depending on the touch interaction.
-    The computer, acting as the server, is producing the sound using Pure Data software.} 
+    \caption{Server-module demo. In this specific use case, the module is connected by wire to a computer. Otherwise, the module is usable wirelessly.The computer is acting as a server. On this version of the demo, the screen is displaying a figure that is evolving depending on the touch interaction. The computer, acting as the server, is producing the sound using Pure Data software.}
     \vspace{0.1cm}
     \label{fig:standalone_demo}
 \end{figure}
@@ -179,4 +175,6 @@ On the limitation side, the use of WiFi ease a lot the deployment of the system,
 % Talk about the start and stop tag to check if frame is entire
 
 \subsection{Conclusion}
+
+In conclusion, the Internet of Plants (IoP) is a revolutionary application of IoT principles to plant systems, enabling more sophisticated interaction between humans and plants. By leveraging distributed systems, sensors, and sonification software, the IoP creates immersive environments where plants can become interactive instruments, generating real-time musical responses based on human touch. This innovation extends beyond artistic installations, providing new opportunities in agriculture, environmental monitoring, and human-computer interaction. However, limitations such as network congestion, sensor accuracy, and audio quality need further work to fully unlock the potential of plant-based sensor networks.
 
