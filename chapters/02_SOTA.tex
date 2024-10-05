@@ -263,8 +263,42 @@ Distributed instruments are then a new way of thinking musical exhibitions and e
 
 Sonification, the process of converting data into sound for interpretation, has seen significant advancements through the use of software frameworks. On this specific part of the state of the art we will focus only on softwares and applications used for sonification. Modern tools enable real-time, interactive sound generation, which is particularly useful in analyzing complex datasets across disciplines such as neuroscience, environmental monitoring, and human-computer interaction. Kramer and al. \cite{kramerSonificationReportStatusb} explored and wrote a study on the status of the sonification field.
 
-It exists three main sonification platforms : Max/MSP, Pure Data, and SuperCollider. They all offer flexible environments for designing custom sound mappings, supporting a wide range of applications \cite{puckettePureDataAnother}\cite{mccartneyRethinkingComputerMusic2002}. These tools often integrate algorithmic processes, sensor data, and even machine learning, producing sophisticated auditory representations that are increasingly immersive. 
-Both SuperCollider and Pure Data are open source projects. Also Max/MSP is only available on Windows and MacOS based machines which can be a limitation when working with sonification server. 
+It exists three main sonification platforms : Max/MSP, Pure Data, and SuperCollider. They all offer flexible environments for designing custom sound mappings, supporting a wide range of applications \cite{puckettePureDataAnother}\cite{mccartneyRethinkingComputerMusic2002}. 
+
+These tools often integrate algorithmic processes, sensor data, and even machine learning, producing sophisticated auditory representations that are increasingly immersive. 
+Both SuperCollider and Pure Data are open source projects. Also Max/MSP is only available on Windows and MacOS based machines which can be a limitation when working with sonification Linux server.
+
+Max/MSP and Pure Data work similarly (ref figure \ref{fig:max_sine_wave} and figure \ref{fig:pd_sine_wave})
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{max_sine_wave.png}
+    \caption{An example of a patch generating a sine wave on Max/MSP} 
+    \vspace{0.1cm}
+    \label{fig:max_sine_wave}
+\end{figure}
+% Ref to those images: https://books.google.fr/books?hl=en&lr=&id=1KI7BAAAQBAJ&oi=fnd&pg=PP1&dq=max+msp+&ots=Qjq5K_Wka6&sig=Nv98NinaBGG9m11sZWrVzBA8xtE&redir_esc=y#v=onepage&q=max%20msp&f=false
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{pd_sine_wave.png}
+    \caption{An example of a patch generating a sine wave on Pure Data} 
+    \vspace{0.1cm}
+    \label{fig:pd_sine_wave}
+\end{figure}
+
+SuperCollider is algorithmic based and less graphical (ref figure \ref{fig:sc_sine_wave}).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{sc_sine_wave.png}
+    \caption{An example of a patch generating a sine wave on SuperCollider} 
+    \vspace{0.1cm}
+    \label{fig:sc_sine_wave}
+\end{figure}
+
+%source: https://doc.sccode.org/Tutorials/Getting-Started/05-Functions-and-Sound.html
+
+%TODO: Ask Marc on how to cite images sources !
 
 Web-based technologies, such as the Web Audio API \cite{smus2013web}, have further expanded accessibility, making interactive sonification more widespread. Peng and al. created a workstation called \textit{SIREN} based on this Web Audio API \cite{pengSIRENCaseStudy2021}. The development of the Web Audio API really eases the development of new sonification frameworks but also the collaboration between artists. It reduces the investment necessary to use sonification software as all the people already has a web browser.
 
