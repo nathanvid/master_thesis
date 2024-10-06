@@ -40,17 +40,7 @@ The IP protocol (whether it is on WiFi or Ethernet) has been chosen for this app
     \item \textbf{Compatibility}: Ethernet is already available on the server, and WiFi is built into the ESP32, eliminating the need for additional hardware.
 \end{itemize}
 
-The communication system is based on WiFi technology, leveraging the ESP32's built-in wireless capabilities. Both the server and the ESP32 devices are connected to the same local network. Data is transmitted from the ESP32 to the server using the IP protocol via a TCP (Transmission Control Protocol) socket. Each ESP32 opens a dedicated TCP socket to the server, and the server is capable of handling multiple sockets simultaneously—one for each connected device.
-
-However, a potential drawback of using IP networks is that they can become overcrowded, especially in environments with high network traffic, which may lead to packet loss or truncated data frames. To mitigate these issues, a start ("#") and stop (";\\n") character is embedded in the data transmission protocol. This structure helps the server recognize the beginning and end of each message, allowing it to discard incomplete or corrupted frames and process only complete, intact data. This approach minimizes the impact of network congestion by ensuring that even if a frame is truncated or lost, the server can still recover and process the next full message without error.
-
-Additionally, this strategy helps maintain a balance within the CAP theorem (Consistency, Availability, and Partition tolerance). While it is impossible to achieve all three properties perfectly in a distributed system, the chosen protocol structure ensures data consistency by filtering out incomplete messages, availability by maintaining active connections across multiple devices, and some degree of partition tolerance in the event of temporary network failures. This balance is critical for ensuring reliable data transmission and processing in the Internet of Plants system.
-
-
-
-\subsection{Server}
-
-The server is a small fanless computer (Dell Optiplex) running Lubuntu. Lubuntu is a lighter version of Ubuntu that includes LXQt as desktop environnement. The choice of a distribution with graphical interface is induced by the use of \textit{Pure Data} as sonification software. However, the server can be run without graphical interface when on production mode. The choice of the light desktop environment is induced by the fact that the server is a low resources computer. The server only include 1 GB of RAM which is a limitation. The server is connected to the local network using an Ethernet cable. The server is also connected to a jack speaker (ref figure \ref{fig:network_architecture}).
+The communication system is based on WiFi technology, leveraging the ESP32's built-in wireless capabilities. Both the server and the ESP32 devices are connected to the same local network. Data is transmitted from the ESP32 to the server using the IP protocol via a TCP (Transmission Control Protocol) socket. Each ESP32 opens a dedicated TCP socket to the server, and the server is capable of handling multiple sockets simultaneously—one for each connected device. The server is connected to the local network via an Ethernet cable, providing a stable, high-speed connection for data processing and sonification (ref figure \ref{fig:network_architecture}).
 
 \begin{figure}[h]
     \centering
@@ -59,6 +49,20 @@ The server is a small fanless computer (Dell Optiplex) running Lubuntu. Lubuntu 
     \vspace{0.1cm}
     \label{fig:network_architecture}
 \end{figure}
+
+However, a potential drawback of using IP networks is that they can become overcrowded, especially in environments with high network traffic, which may lead to packet loss or truncated data frames. To mitigate these issues, a start ("#") and stop (";\\n") character is embedded in the data transmission protocol. This structure helps the server recognize the beginning and end of each message, allowing it to discard incomplete or corrupted frames and process only complete, intact data. This approach minimizes the impact of network congestion by ensuring that even if a frame is truncated or lost, the server can still recover and process the next full message without error.
+
+Additionally, this strategy helps maintain a balance within the CAP theorem (Consistency, Availability, and Partition tolerance). While it is impossible to achieve all three properties perfectly in a distributed system, the chosen protocol structure ensures data consistency by filtering out incomplete messages, availability by maintaining active connections across multiple devices, and some degree of partition tolerance in the event of temporary network failures. This balance is critical for ensuring reliable data transmission and processing in the Internet of Plants system.
+
+
+
+
+
+\subsection{Server}
+
+The server is a small fanless computer (Dell Optiplex) running Lubuntu. Lubuntu is a lighter version of Ubuntu that includes LXQt as desktop environnement. The choice of a distribution with graphical interface is induced by the use of \textit{Pure Data} as sonification software. However, the server can be run without graphical interface when on production mode. The choice of the light desktop environment is induced by the fact that the server is a low resources computer. The server only include 1 GB of RAM which is a limitation. The server is connected to the local network using an Ethernet cable. The server is also connected to a jack speaker (ref figure \ref{fig:network_architecture}).
+
+
 
 
 %TODO: Add a picture of the  real setup
@@ -105,13 +109,20 @@ The main module then send the processed data to \textit{Pure Data} patch using a
 
 \subsection{Deployment} %and application}
 
-The server software is easily deployable. The software includes a shell script to deploy the server service.
-Indeed, the server relies on a \textit{systemd} linux service. \textit{Systemd} \cite{Both2020} is a
-Linux software that manage application that runs \textit{daemons} or services.
+The server software is easily deployable. The software includes a shell script to deploy the server service (ref figure \ref{fig:install_script_logic}).
+Indeed, the server relies on a \textit{systemd} linux service. \textit{Systemd} \cite{Both2020} is a Linux software that manage application that runs \textit{daemons} or services.
 \textit{Daemons} are pieces of software that run in background of the operating
 system. They are mainly started at the during the boot of the operating system.
 
-The server is deployed that way so the software starts with the operating system.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{install_script_logic.png}
+    \caption{Logic of the installation script. The script install the Python dependencies, fill in the templated service file, install the service and enable it.}
+    \vspace{0.1cm}
+    \label{fig:install_script_logic}
+\end{figure}
+
+The server is deployed using systemd service to allow the software to start with the operating system.
 It waits for the network interfaces to be up and running and opens the socket.
 The installation tool install Python dependencies, fill in the templated service file,
 install the service and enable it. The server is able to receive data from IoP standalone
@@ -132,6 +143,11 @@ The Internet of Plants (IoP) architecture enables the creation of a distributed 
 The system sends this data to \textit{Pure Data} (PD), an open-source visual programming language for multimedia applications, where sound parameters such as pitch, tone, and rhythm can be finely controlled. This setup allows for highly customizable soundscapes, where each plant generates unique sounds based on user interaction, creating a rich, immersive musical experience. The distributed instrument thus transforms the interaction with plants into a collaborative musical performance, opening up new possibilities for art installations and interactive environments.
 
 \subsection{output}
+
+\subsubsection{Evauation}
+
+%TODO: Create a Table that regroup frame dropped vs frame received
+%TODO: Create a table 
 
 \subsubsection{Art exhibition}
 
