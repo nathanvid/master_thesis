@@ -34,10 +34,10 @@ Bluetooth, Bluetooth Low Energy and Zigbee (ref to table \ref{tab:protocol_compa
 The IP protocol (whether it is on WiFi or Ethernet) has been chosen for this application for several reasons:
 
 \begin{itemize}
-    \item High bandwidth: It supports the transmission of large amounts of data quickly and efficiently, which is essential for real-time interactions in the system.
-    \item Widespread availability: WiFi and Ethernet are commonly available in most exhibition spaces, ensuring easy deployment in a variety of environments.
-    \item Multi-device connectivity: The protocol allows the connection of multiple devices simultaneously, which is crucial for building a distributed system where many plants can interact with the server.
-    \item Compatibility: Ethernet is already available on the server, and WiFi is built into the ESP32, eliminating the need for additional hardware.
+    \item \textbf{High bandwidth}: It supports the transmission of large amounts of data quickly and efficiently, which is essential for real-time interactions in the system.
+    \item \textbf{Widespread availability}: WiFi and Ethernet are commonly available in most exhibition spaces, ensuring easy deployment in a variety of environments.
+    \item \textbf{Multi-device connectivity}: The protocol allows the connection of multiple devices simultaneously, which is crucial for building a distributed system where many plants can interact with the server.
+    \item \textbf{Compatibility}: Ethernet is already available on the server, and WiFi is built into the ESP32, eliminating the need for additional hardware.
 \end{itemize}
 
 The communication system is based on WiFi technology, leveraging the ESP32's built-in wireless capabilities. Both the server and the ESP32 devices are connected to the same local network. Data is transmitted from the ESP32 to the server using the IP protocol via a TCP (Transmission Control Protocol) socket. Each ESP32 opens a dedicated TCP socket to the server, and the server is capable of handling multiple sockets simultaneously—one for each connected device.
@@ -50,41 +50,39 @@ Additionally, this strategy helps maintain a balance within the CAP theorem (Con
 
 \subsection{Server}
 
-The server is a small fanless computer running Lubuntu. Lubuntu is a lighter version of Ubuntu
-that includes LXQt as desktop environnement. The choice of a distribution with graphical
-interface is induced by the use of \textit{Pure Data} as sonification software.
+The server is a small fanless computer (Dell Optiplex) running Lubuntu. Lubuntu is a lighter version of Ubuntu that includes LXQt as desktop environnement. The choice of a distribution with graphical interface is induced by the use of \textit{Pure Data} as sonification software. However, the server can be run without graphical interface when on production mode. The choice of the light desktop environment is induced by the fact that the server is a low resources computer. The server only include 1 GB of RAM which is a limitation. The server is connected to the local network using an Ethernet cable. The server is also connected to a jack speaker.
 
-Pure Data (PD) is an open-source visual programming language designed primarily for creating interactive multimedia applications, particularly in the fields of audio, video, and graphical processing.
-Pure Data is part of a family of patcher programming languages, which also includes Max/MSP.
+\textit{Pure Data} (PD) is an open-source visual programming language designed primarily for creating interactive multimedia applications, particularly in the fields of audio, video, and graphical processing.
+\textit{Pure Data} is part of a family of patcher programming languages, which also includes Max/MSP.
 Unlike traditional text-based programming, PD uses a graphical interface where users connect
 "objects" with virtual patch cables to create complex data flows and signal processing chains.
 Its modular design allows for real-time manipulation of sound and graphics, making it a powerful
 tool for artists, musicians, and researchers interested in exploring experimental media.
 
-Pure Data requires, in a development environnement, a graphical interface to test and debug.
-The Pure Data patch receive the data through a TCP socket. The data is processed through several
+\textit{Pure Data} requires, in a development environnement, a graphical interface to test and debug.
+The \textit{Pure Data} patch receive the data through a TCP socket. The data is processed through several
 operations. Then, if a threshold is passed, an interaction happened and the music is triggered.
 The music is outputted through the item \textit{DAC} which means Digital to Analog Converter.
-The digital input from pure data is converted to a sound that speakers can output.
+The digital input from \textit{Pure Data} is converted to a sound that speakers can output.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{pure_data_patch.png}
     \caption{Basic \textit{Pure Data} patch that is used for sonification of the data
-        of the plant. In case of an art exhibition, the Pure Data patch can be upgraded to meet the
+        of the plant. In case of an art exhibition, the \textit{Pure Data} patch can be upgraded to meet the
         artist needs}
     \vspace{0.1cm}
     \label{fig:pure_data_patch}
 \end{figure}
 
 
-Pure Data is a sonification software that require data as input. In order to get and process the data,
+\textit{Pure Data} is a sonification software that require data as input. In order to get and process the data,
 we designed a Python based software. %FIXME: microservices
 The software is object oriented. The standalone IoP modules connect using WiFi to the receiver module
 of the software. The connection is made using TCP socket from the ESP32 to the server.
 The main module of the software then creates software abstraction of the standalone module.
 The abstraction module is processing and storing all the processed data.
-The main module then send the processed data to Pure Data patch using also local TCP socket.
+The main module then send the processed data to \textit{Pure Data} patch using also local TCP socket.
 
 \begin{figure}[h]
     \centering
@@ -107,7 +105,7 @@ The server is deployed that way so the software starts with the operating system
 It waits for the network interfaces to be up and running and opens the socket.
 The installation tool install Python dependencies, fill in the templated service file,
 install the service and enable it. The server is able to receive data from IoP standalone
-modules and use Pure Data software for sonification. The last step is to connect
+modules and use \textit{Pure Data} software for sonification. The last step is to connect
 a jack speaker to the jack builtin output.
 
 On the IoP standalone module side, it requires a software that is able to upload
@@ -121,7 +119,7 @@ The module sends all the retrieved data to the server.
 
 The Internet of Plants (IoP) architecture enables the creation of a distributed instrument, where multiple IoP standalone modules can be deployed across different plants to form an interconnected musical system. Each module, linked to the server via WiFi, sends data collected from plant interactions, which the server then processes. By assigning unique IDs to each module, the server can differentiate between the various plants, allowing for distinct musical outputs based on the origin of the data.
 
-The system sends this data to Pure Data (PD), an open-source visual programming language for multimedia applications, where sound parameters such as pitch, tone, and rhythm can be finely controlled. This setup allows for highly customizable soundscapes, where each plant generates unique sounds based on user interaction, creating a rich, immersive musical experience. The distributed instrument thus transforms the interaction with plants into a collaborative musical performance, opening up new possibilities for art installations and interactive environments.
+The system sends this data to \textit{Pure Data} (PD), an open-source visual programming language for multimedia applications, where sound parameters such as pitch, tone, and rhythm can be finely controlled. This setup allows for highly customizable soundscapes, where each plant generates unique sounds based on user interaction, creating a rich, immersive musical experience. The distributed instrument thus transforms the interaction with plants into a collaborative musical performance, opening up new possibilities for art installations and interactive environments.
 
 \subsection{output}
 
@@ -155,16 +153,25 @@ The music coming from the plant is fully configurable with the sonification soft
 
 \subsubsection{Final product, limitations and future work}
 
-Final product is a software that allows the connection between multiple standalone IoP modules and a sonification
-software, Pure Data. The software handle multiple connection and apply a filtering and cleaning on the data
-retrieved. The data is then sent to Pure Data for sonification.
+Final product is a software that allows the connection between multiple standalone IoP modules and a sonification software, \textit{Pure Data}. The software handle multiple connection and apply a filtering and cleaning on the data
+retrieved. The data is then sent to \textit{Pure Data} for sonification.
+
+As a demo and in order to do a photo shooting, we built up a system using the standalone module, connected through wire (ref figure \ref{fig:standalone_demo}). We used the serial communication in this demo because we did not have wireless communication usable at the shooting site. The computer is showing a visualization from the incoming data. This is a waterwall like visualization (ref figure \ref{fig:extracted_frame_demo}). The data is processed and displayed on the computer screen. The data is normalized on the y-axis. The x-axis is the sweep frequency. The graph signal at the bottom is the real-time signal. The computer is also producing the sound using \textit{Pure Data} software.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/standalone_demo.jpg}
-    \caption{Server-module demo. In this specific use case, the module is connected by wire to a computer. Otherwise, the module is usable wirelessly.The computer is acting as a server. On this version of the demo, the screen is displaying a figure that is evolving depending on the touch interaction. The computer, acting as the server, is producing the sound using Pure Data software.}
+    \includegraphics[width=0.8\textwidth]{server_module_demo.jpg}
+    \caption{Server-module demo. In this specific use case, the module is connected by wire to a computer. Otherwise, the module is usable wirelessly.The computer is acting as a server. On this version of the demo, the screen is displaying a figure that is evolving depending on the touch interaction. The computer, acting as the server, is producing the sound using \textit{Pure Data} software.}
     \vspace{0.1cm}
-    \label{fig:standalone_demo}
+    \label{fig:server_module_demo}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{extracted_frame_demo.png}
+    \caption{Waterfall like visualization of the data extracted from the standalone module. The data is processed and displayed on the computer screen. The data is normalized on the y-axis. The x-axis is the sweep frequency. The graph signal at the bottom is the real-time signal.}
+    \vspace{0.1cm}
+    \label{fig:extracted_frame_demo}
 \end{figure}
 
 On the limitation side, the use of WiFi ease a lot the deployment of the system, however
