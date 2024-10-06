@@ -50,7 +50,18 @@ Additionally, this strategy helps maintain a balance within the CAP theorem (Con
 
 \subsection{Server}
 
-The server is a small fanless computer (Dell Optiplex) running Lubuntu. Lubuntu is a lighter version of Ubuntu that includes LXQt as desktop environnement. The choice of a distribution with graphical interface is induced by the use of \textit{Pure Data} as sonification software. However, the server can be run without graphical interface when on production mode. The choice of the light desktop environment is induced by the fact that the server is a low resources computer. The server only include 1 GB of RAM which is a limitation. The server is connected to the local network using an Ethernet cable. The server is also connected to a jack speaker.
+The server is a small fanless computer (Dell Optiplex) running Lubuntu. Lubuntu is a lighter version of Ubuntu that includes LXQt as desktop environnement. The choice of a distribution with graphical interface is induced by the use of \textit{Pure Data} as sonification software. However, the server can be run without graphical interface when on production mode. The choice of the light desktop environment is induced by the fact that the server is a low resources computer. The server only include 1 GB of RAM which is a limitation. The server is connected to the local network using an Ethernet cable. The server is also connected to a jack speaker (ref figure \ref{fig:network_architecture}).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{network_architecture.png}
+    \caption{Schematic of the network architecture of the Internet of Plants project. The standalone modules are connected to the server using WiFi. The server is connected via Ethernet cable to the local access point. The server is also connected to a jack speaker working as output.}
+    \vspace{0.1cm}
+    \label{fig:network_architecture}
+\end{figure}
+
+
+%TODO: Add a picture of the  real setup
 
 \textit{Pure Data} (PD) is an open-source visual programming language designed primarily for creating interactive multimedia applications, particularly in the fields of audio, video, and graphical processing.
 \textit{Pure Data} is part of a family of patcher programming languages, which also includes Max/MSP.
@@ -76,8 +87,7 @@ The digital input from \textit{Pure Data} is converted to a sound that speakers 
 \end{figure}
 
 
-\textit{Pure Data} is a sonification software that require data as input. In order to get and process the data,
-we designed a Python based software. %FIXME: microservices
+\textit{Pure Data} is a sonification software that require data as input. In order to get and process the data, we designed a Python based software. %FIXME: microservices
 The software is object oriented. The standalone IoP modules connect using WiFi to the receiver module
 of the software. The connection is made using TCP socket from the ESP32 to the server.
 The main module of the software then creates software abstraction of the standalone module.
