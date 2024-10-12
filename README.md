@@ -34,7 +34,7 @@ To compile the thesis, you'll need a working LaTeX distribution. The recommended
 
 ## Compilation Instructions
 
-### Locally (Using Make)
+### Locally
 
 You can compile the entire thesis into a PDF by running:
 
@@ -60,10 +60,6 @@ This repository is meant for academic and personal use.
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
-## Acknowledgments
-
-Special thanks to my supervisors, Clément Duhart and Marc Teyssier, and everyone who supported me during the writing of this thesis.
 
 ---
 
