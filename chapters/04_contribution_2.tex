@@ -114,13 +114,13 @@ Indeed, the server relies on a \textit{systemd} linux service. \textit{Systemd} 
 \textit{Daemons} are pieces of software that run in background of the operating
 system. They are mainly started at the during the boot of the operating system.
 
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.8\textwidth]{install_script_logic.png}
-    \caption{Logic of the installation script. The script install the Python dependencies, fill in the templated service file, install the service and enable it.}
-    \vspace{0.1cm}
-    \label{fig:install_script_logic}
-\end{figure}
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{install_script_logic.png}
+%     \caption{Logic of the installation script. The script install the Python dependencies, fill in the templated service file, install the service and enable it.}
+%     \vspace{0.1cm}
+%     \label{fig:install_script_logic}
+% \end{figure}
 
 The server is deployed using systemd service to allow the software to start with the operating system.
 It waits for the network interfaces to be up and running and opens the socket.
@@ -182,7 +182,7 @@ The music coming from the plant is fully configurable with the sonification soft
 Final product is a software that allows the connection between multiple standalone IoP modules and a sonification software, \textit{Pure Data}. The software handle multiple connection and apply a filtering and cleaning on the data
 retrieved. The data is then sent to \textit{Pure Data} for sonification.
 
-As a demo and in order to do a photo shooting, we built up a system using the standalone module, connected through wire (ref figure \ref{fig:standalone_demo}). We used the serial communication in this demo because we did not have wireless communication usable at the shooting site. The computer is showing a visualization from the incoming data. This is a waterwall like visualization (ref figure \ref{fig:extracted_frame_demo}). The data is processed and displayed on the computer screen. The data is normalized on the y-axis. The x-axis is the sweep frequency. The graph signal at the bottom is the real-time signal. The computer is also producing the sound using \textit{Pure Data} software.
+As a demo and in order to do a photo shooting, we built up a system using the standalone module, connected through wire (ref figure \ref{fig:server_module_demo}). We used the serial communication in this demo because we did not have wireless communication usable at the shooting site. The computer is showing a visualization from the incoming data. This is a waterwall like visualization (ref figure \ref{fig:extracted_frame_demo}). The data is processed and displayed on the computer screen. The data is normalized on the y-axis. The x-axis is the sweep frequency. The graph signal at the bottom is the real-time signal. The computer is also producing the sound using \textit{Pure Data} software.
 
 \begin{figure}[h!]
     \centering
@@ -200,12 +200,13 @@ As a demo and in order to do a photo shooting, we built up a system using the st
     \label{fig:extracted_frame_demo}
 \end{figure}
 
-On the limitation side, the use of WiFi ease a lot the deployment of the system, however
-% Talk about a better fault tolerant way of communicating.
-% About monitoring
-% TODO: Talk about overcrowded wifi
-% talk about frame dropped and lost. 
-% Talk about the start and stop tag to check if frame is entire
+The Internet of Plants system faces several limitations in its current implementation, particularly in the areas of communication and data reliability. One major challenge is the use of WiFi as the primary communication protocol. In environments with high network traffic, WiFi can become overcrowded, leading to dropped frames and inconsistent data transmission. This congestion affects the real-time interaction between plants and the sonification process.
+
+Another limitation is the potential for frame loss during data transmission. Although the system incorporates start and stop tags to verify the completeness of data frames, this method is not sufficient to prevent the loss of frames in overloaded networks. The absence of a more advanced error-handling mechanism results in incomplete or corrupted data, which reduces the accuracy of the system.
+
+Furthermore, there is limited fault tolerance in the current communication setup. The system lacks mechanisms to ensure consistent data flow or recovery from network failures, which can disrupt the continuous interaction between the plants and the server.
+
+Lastly, there is inadequate monitoring of the distributed network. The system does not provide real-time feedback on the health of the network or the individual plant sensors, making it difficult to detect and address failures quickly.
 
 \subsection{Conclusion}
 
