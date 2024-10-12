@@ -195,17 +195,9 @@ The audio speaker chosen in our specific example is a 8 Ohms 3 Watts speaker.
 The final product is an embedded device that include signal filtering, wireless communication and embedded sonification.
 
 
-% To improve the device, the PCB could be reduced in size using a surface mounted device (SMD) ESP32 instead of a DevKit.
-% I already started to work on a new version of the device. This version is only designed on Kicad and not prototyped.
-% The rest of circuit is similar. 
-
-%TODO: Add a schematic of the new PCB
-
-
 A better audio amplifier could be explored in order to reduce the distortion of the sound.
-Adding an external digital to analog converter is also a possibility in order to upgrade the output. However,
-this possibility adds new components that will increase the size. Exploring the I2S protocol opens better output.
-The I2S protocol is a protocol  %TODO: Talk quickly about I2S protocol
+Adding an external digital to analog converter is also a possibility in order to upgrade the output. However, this possibility adds new components that will increase the size. Exploring the I2S protocol opens better output.
+The I2S (Inter-IC Sound) protocol is used to transmit digital audio between devices like microcontrollers and DACs. It enables high-quality stereo audio transfer, using a master-slave setup to synchronize data with clock signals. Ideal for applications needing accurate sound transmission.
 
 
 \subsection{Conclusion}
