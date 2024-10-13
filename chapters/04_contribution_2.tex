@@ -144,7 +144,24 @@ The system sends this data to \textit{Pure Data} (PD), an open-source visual pro
 
 \subsection{Results}
 
-\subsubsection{Evauation}
+\subsubsection{Evaluation}
+
+The Internet of Plants (IoP) system was evaluated based on its ability to handle multiple connections and receive data from standalone modules. The system was tested with one and two standalone modules connected simultaneously to the server, sending data packets at regular intervals. The server successfully received data from all connected devices, demonstrating its capability to handle multiple connections and process data from each module independently. The results are summarized in table \ref{tab:network_results}.
+The network was not really crowded. The network tested was in a residential area with 5 devices connected to the access point.
+
+\begin{table}[h!]
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \begin{tabular}[c]{@{}l@{}}Number of \\ simultaneously connected \\ standalone devices\end{tabular} & \begin{tabular}[c]{@{}l@{}}Number of \\ data packets \\ sent from \\ standalone modules\end{tabular} & \begin{tabular}[c]{@{}l@{}}Average number\\ of data \\ packet received \\ (on 20 runs)\end{tabular} \\ \hline
+        1 standalone module                                                                                 & 100 packets                                                                                          & 99.20 packets                                                                                       \\ \hline
+        2 standalone modules                                                                                & \begin{tabular}[c]{@{}l@{}}100 packets\\ (from each device)\end{tabular}                             & 99.625 packets                                                                                      \\ \hline
+    \end{tabular}
+    \caption{Number of data packets sent from standalone module vs number of data packets received by the server. The server is able to handle multiple connections and receive data from all connected devices. We repeated the operations 20 times to get an average.}
+    \label{tab:network_results}
+\end{table}
+
+
+
 
 %TODO: Create a Table that regroup frame dropped vs frame received
 %TODO: Create a table 
