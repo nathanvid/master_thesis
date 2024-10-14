@@ -231,10 +231,31 @@ Like the previous authors, Kitano and al. \cite{kitanoInternetPlantsIoP2022} als
 \subsubsection{Distributed system}
 
 The Internet of Plants relies on the paradigm of \textit{distributed systems}. Van and al. define distributed systems as " collection of autonomous computing elements that appears to its users as a single coherent system." \cite{steenDistributedSystems2017}.
-Distributed systems scaled up with the improvement of computation power and networking link speed. It is now possible using networking to spread calculation power around a room or even the world and to rely on this computation power as a part of a working system.
+Distributed systems scaled up with the improvement of computation power and networking link speed. It is now possible using networking to spread calculation power around a room or even the world and to rely on this computation power as a part of a working system. Distributed systems usually needs a transaction processing monitor (TP monitor) to balance and manage the communications and messages (ref figure \ref{fig:distrib_system_1}).
 
-Even if distributed systems spread up thanks to the increasing networking speed, they are far from being new. In 1985 Kleinrock and Leonard \cite{kleinrockDistributedSystems} already explained the principle of distributed systems. They get inspired by nature looking at bees that are communicating to fetch food, ants are also communicating but adding also their strength to get back the food.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{distrib_system_1.png}
+    \caption{Role of a transaction processing monitor in a distributed system. The transaction processing monitor can be an app (python for instance), a load balancer...}
+    \vspace{0.1cm}
+    \label{fig:distrib_system_1}
+\end{figure}
+
+%source: p 37 from \cite{steenDistributedSystems2017}
+
+Even if distributed systems spread up thanks to the increasing networking speed, they are far from being new. In 1985 Kleinrock and Leonard \cite{kleinrockDistributedSystems} already explained the principle of distributed systems. They get inspired by nature looking at bees that are communicating to fetch food, ants are also communicating but adding also their strength to get back the food. The brain is also a great example of gathering compute power to create a wide compute unit (ref figure \ref{fig:distrib_system_brain}).
 At this time, adding computation power was a really interesting way of expanding the power on a local network.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{distrib_system_brain.png}
+    \caption{Human brain that is a distributed with compute units (the neurones) that creates and fully parallelized compute unit (the brain).}
+    \vspace{0.1cm}
+    \label{fig:distrib_system_brain}
+\end{figure}
+
+%source: p3 \cite{kleinrockDistributedSystems} 
+
 
 Distributed system complicates the monitoring of the system and add complexities and faulty points in the system. There have been a lot of
 research about the best way of linking pieces of a distributed system. Distributed system are usually based on a communication protocol such as the internet protocol (IP), bluetooth mesh or even Lora.
@@ -252,10 +273,6 @@ including a network communication.
 On the monitoring side, Joyce and al. \cite{joyceMonitoringDistributedSystems} explained how to build a monitoring
 on a distributed system. Monitoring in the case of a full solution is mandatory to be able to capture and react to eventual
 failure on the system.
-
-% TODO: Adding a new part of the distributed system
-%Upgrade the computation power.
-
 
 
 \subsubsection{Distributed instruments}
