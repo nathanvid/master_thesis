@@ -72,9 +72,9 @@
 
 	% Add a blank page before the main matter if the front matter has an
 	% odd number of pages
-	\ifthispageodd{
-		\afterpage{\blankpage}
-	}{}
+	% \ifthispageodd{
+	% 	\afterpage{\blankpage}
+	% }{}
 
 	\oldmainmatter % Call the old command
 

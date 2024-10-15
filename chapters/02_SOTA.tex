@@ -39,7 +39,7 @@ On top of that, Kellert and al. studied the benefits of adding plants and vegeta
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{biophilic_design.png}
-    \caption{\textit{Biophilia Hypothesis} architecture example. This building is the perfect example of Thermal and Airﬂow Variability from the \textit{Biophilia Hypothesis} principles.}
+    \caption{\textit{Biophilia Hypothesis} architecture example. This building is the perfect example of Thermal and Airﬂow Variability from the \textit{Biophilia Hypothesis} principles (ref \citet{ryanBiophilicDesign2018a}).}
     % source: ryanBiophilicDesign2018a
     \vspace{0.1cm}
     \label{fig:biophilic_design}
@@ -102,8 +102,32 @@ In their article, Honigman and al. \cite{honigmanTechniquesSweptFrequencyb} adap
 device to be use with an Arduino\footnote{Open source compute unit} microcontroller. This allowing people
 to reproduce the set-up easily.
 
+\subsubsection{Exponential moving average}
 
-% \subsubsection{Plant as sensors Plant transformed into sensors}
+The Estimated Mean Average (EMA) is a statistical method that gives more weight to recent data points while still considering past observations. It is commonly used in time series analysis to track trends by smoothing out data fluctuations. Unlike the Simple Moving Average (SMA), the EMA adjusts more quickly to changes, making it useful in fields like finance, engineering, and sensor data analysis.
+
+In finance, the EMA helps identify trends by reacting more sensitively to recent price changes. It is also applied in areas like environmental monitoring, where it processes sensor inputs to reflect real-time changes while minimizing short-term noise.
+
+The formula for EMA is (ref \cite{hunter1986exponentially}):
+
+\begin{math}
+    EMA_t=\alpha⋅Y_t+(1-\alpha)⋅EMA_{t-1}
+    
+\end{math}
+
+Where:
+\begin{itemize}
+    \item $EMA_t$ is the current EMA.
+    \item $Y_t$ is the current data point.
+    \item $\alpha$ is the smoothing factor.
+    \item $EMA_{t-1}$ is the previous EMA.
+\end{itemize}
+
+
+The smoothing factor $\alpha$ controls the weight given to recent data, making EMA more responsive to recent changes while still considering past data.
+
+In the IoT world, it can be useful to have those kind of models, because you can't keep the track of large amount of data. Indeed, the embedded have limited resources. The EMA allows to create a kind of mean with less data to store.
+
 
 \subsubsection{Touch sensors}
 
