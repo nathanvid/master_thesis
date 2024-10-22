@@ -98,7 +98,7 @@ The digital input from \textit{Pure Data} is converted to a sound that speakers 
 \end{figure}
 
 
-\textit{Pure Data} is a sonification software that require data as input. In order to get and process the data, we designed a Python based software. %FIXME: microservices
+\textit{Pure Data} is a sonification software that require data as input. In order to get and process the data, we designed a Python based software.
 The software is object oriented. The standalone IoP modules connect using WiFi to the receiver module
 of the software. The connection is made using TCP socket from the ESP32 to the server.
 The main module of the software then creates software abstraction of the standalone module.
@@ -115,6 +115,9 @@ The main module then send the processed data to \textit{Pure Data} patch using a
 
 
 \subsection{Deployment} %and application}
+
+\subsubsection{Server and application}
+
 
 The server software is easily deployable. The software includes a shell script to deploy the server service (ref figure \ref{fig:install_script_logic}).
 Indeed, the server relies on a \textit{systemd} linux service. \textit{Systemd} \cite{Both2020} is a Linux software that manage application that runs \textit{daemons} or services.
@@ -143,7 +146,7 @@ The source code is written in C++ using the Arduino framework. You flash the fir
 to the chip after setting up the WiFi credentials.
 The module sends all the retrieved data to the server.
 
-\subsubsection{Distributed instruments}
+\subsubsection{Distributed instruments and interccommunication}
 
 The Internet of Plants (IoP) architecture enables the creation of a distributed instrument, where multiple IoP standalone modules can be deployed across different plants to form an interconnected musical system. Each module, linked to the server via WiFi, sends data collected from plant interactions, which the server then processes. By assigning unique IDs to each module, the server can differentiate between the various plants, allowing for distinct musical outputs based on the origin of the data.
 
@@ -167,11 +170,9 @@ The network was not really crowded. The network tested was in a residential area
     \label{tab:network_results}
 \end{table}
 
+During the system evaluation of the "Internet of Plants" project, a live demo was set up for a school open day at the Institute for Future Technologies. This demo served as the welcoming installation for visitors, featuring a plant that produced music in response to touch. People were drawn to interact with the "singing plant" and wanted to explore how their touch influenced the sounds. They were very intrigued by the plant.
 
 
-
-%TODO: Create a Table that regroup frame dropped vs frame received
-%TODO: Create a table 
 
 \subsubsection{Art exhibition}
 

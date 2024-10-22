@@ -1,5 +1,6 @@
-\section{Plant as sensor}
+\section{Plant becoming a sensor}
 
+%TODO general : add bold
 
 \subsection{Introduction}
 
@@ -9,10 +10,36 @@ In the following "Plant as a Sensor" section, this concept is taken further by f
 
 \subsection{Technical choices}
 
-%TODO: Rework the technical choices part.
 Before diving into the implementation, several technical choices were made to shape the overall design of the system. The first major decision was selecting the ESP32 microcontroller as the core processing unit due to its versatility, offering built-in WiFi, multiple GPIO pins, and analog-to-digital converters, which allow for handling sensor data and wireless communication efficiently.
 
 Additionally, the system's audio capabilities were a critical consideration, leading to the inclusion of a basic amplification circuit to boost sound output, ensuring compatibility with external speakers. The design also included a micro-SD slot to allow for expandable storage, enabling future enhancements like storing pre-recorded sounds or more detailed data logs. These foundational decisions laid the groundwork for a scalable and reliable system, ensuring smooth integration of the components that follow in the implementation.
+
+In order to process efficiently the data on board, we aim to use the Estimated Mean Average (EMA) algorithm.
+
+The Estimated Mean Average (EMA) is a statistical method that gives more weight to recent data points while still considering past observations. It is commonly used in time series analysis to track trends by smoothing out data fluctuations. Unlike the Simple Moving Average (SMA), the EMA adjusts more quickly to changes, making it useful in fields like finance, engineering, and sensor data analysis.
+
+In finance, the EMA helps identify trends by reacting more sensitively to recent price changes. It is also applied in areas like environmental monitoring, where it processes sensor inputs to reflect real-time changes while minimizing short-term noise.
+
+The formula for EMA is (ref \cite{hunter1986exponentially}):
+
+\begin{math}
+    EMA_t=\alpha⋅Y_t+(1-\alpha)⋅EMA_{t-1}
+
+\end{math}
+
+Where:
+\begin{itemize}
+    \item $EMA_t$ is the current EMA.
+    \item $Y_t$ is the current data point.
+    \item $\alpha$ is the smoothing factor.
+    \item $EMA_{t-1}$ is the previous EMA.
+\end{itemize}
+
+
+The smoothing factor $\alpha$ controls the weight given to recent data, making EMA more responsive to recent changes while still considering past data.
+
+In the IoT world, it can be useful to have those kind of models, because you can't keep the track of large amount of data. Indeed, the embedded have limited resources. The EMA allows to create a kind of mean with less data to store.
+
 
 \subsection{The electronic interface}
 
@@ -127,7 +154,7 @@ This combination of a custom C library for performance and Python bindings for r
 
 %TODO: Add a table comparing the values depending on the interaction
 
-\subsubsection{Sonification on the device} % FIXME: subsubsection ??
+\subsubsection{Sonification on the device}
 
 The human interaction goes through the sonification on the device. ESP32 embeds a 8-bit digital to analog converter (DAC).
 The embed DAC is enough to play low quality sounds. Combined with the micro-SD card including in it, it is a media player.
@@ -170,14 +197,14 @@ In evaluating the system for using plants as sensors, various interactions were 
 \begin{figure}[h!]
     \centering
     \begin{minipage}{.5\textwidth}
-      \centering
-      \includegraphics[width=0.9\linewidth]{100_khz_no_touch.png}
-      \label{fig:100_khz_no_touch}
+        \centering
+        \includegraphics[width=0.9\linewidth]{100_khz_no_touch.png}
+        \label{fig:100_khz_no_touch}
     \end{minipage}%
     \begin{minipage}{.5\textwidth}
-      \centering
-      \includegraphics[width=.9\linewidth]{100_khz_touched.png}
-      \label{fig:100_khz_touched}
+        \centering
+        \includegraphics[width=.9\linewidth]{100_khz_touched.png}
+        \label{fig:100_khz_touched}
     \end{minipage}
     \caption{Example of outputted signal from the filter with the plant touched and non-touched. The yellow signal is the signal generated from the ESP32. The violet one is the output of the filter, after interacting with the plant. The frequency is currently set at 100kHz to compared the 2 states. The left oscilloscope signal is the non-touched system. The right oscilloscope signal is the touched system. On these images, we did not use the trigger function from the oscilloscope.}
     \label{fig:100_khz_signals}
@@ -187,14 +214,14 @@ In evaluating the system for using plants as sensors, various interactions were 
 \begin{figure}[h!]
     \centering
     \begin{minipage}{.5\textwidth}
-      \centering
-      \includegraphics[width=0.9\linewidth]{300_khz_no_touch.png}
-      \label{fig:300_khz_no_touch}
+        \centering
+        \includegraphics[width=0.9\linewidth]{300_khz_no_touch.png}
+        \label{fig:300_khz_no_touch}
     \end{minipage}%
     \begin{minipage}{.5\textwidth}
-      \centering
-      \includegraphics[width=.9\linewidth]{300_khz_touched.png}
-      \label{fig:300_khz_touched}
+        \centering
+        \includegraphics[width=.9\linewidth]{300_khz_touched.png}
+        \label{fig:300_khz_touched}
     \end{minipage}
     \caption{Example of outputted signal from the filter with the plant touched and non-touched. The yellow signal is the signal generated from the ESP32. The violet one is the output of the filter, after interacting with the plant. The frequency is currently set at 300kHz to compared the 2 states. The left oscilloscope signal is the non-touched system. The right oscilloscope signal is the touched system. On these images, we used the trigger function from the oscilloscope, explaining the clean output.}
     \label{fig:300_khz_signals}
@@ -203,22 +230,22 @@ In evaluating the system for using plants as sensors, various interactions were 
 
 \begin{table}[h!]
     \begin{tabular}{|l|lll|}
-    \hline
-    Frequency                & State     & Peak to peak (mV) & Mean voltage (mV) \\ \hline
-    \multirow{2}{*}{100 kHz} & Untouched & 192               & 198.01            \\
-                             & Touched   & 168               & 152.02            \\ \hline
-    \multirow{2}{*}{150 kHz} & Untouched & 260               & 534.93            \\
-                             & Touched   & 300               & 487.77            \\ \hline
-    \multirow{2}{*}{200 kHz} & Untouched & 340               & 464.71            \\
-                             & Touched   & 260               & 259.56            \\ \hline
-    \multirow{2}{*}{250 kHz} & Untouched & 340               & 506.18            \\
-                             & Touched   & 200               & 286.08            \\ \hline
-    \multirow{2}{*}{300 kHz} & Untouched & 280               & 325.58            \\
-                             & Touched   & 160               & 188.03            \\ \hline
+        \hline
+        Frequency                & State     & Peak to peak (mV) & Mean voltage (mV) \\ \hline
+        \multirow{2}{*}{100 kHz} & Untouched & 192               & 198.01            \\
+                                 & Touched   & 168               & 152.02            \\ \hline
+        \multirow{2}{*}{150 kHz} & Untouched & 260               & 534.93            \\
+                                 & Touched   & 300               & 487.77            \\ \hline
+        \multirow{2}{*}{200 kHz} & Untouched & 340               & 464.71            \\
+                                 & Touched   & 260               & 259.56            \\ \hline
+        \multirow{2}{*}{250 kHz} & Untouched & 340               & 506.18            \\
+                                 & Touched   & 200               & 286.08            \\ \hline
+        \multirow{2}{*}{300 kHz} & Untouched & 280               & 325.58            \\
+                                 & Touched   & 160               & 188.03            \\ \hline
     \end{tabular}
     \caption{Data collected using the oscilloscope method on different frequencies. We are looking at the peak to peak voltage and the mean voltage on several periods.}
     \label{tab:sum_up_data_oscil}
-    \end{table}
+\end{table}
 
 In the evaluation of the "Plant as a Sensor" system, various frequencies were tested to assess the plant's response to touch and its effect on the signal output. A table (ref table \ref{tab:sum_up_data_oscil}) comparing peak-to-peak voltages and mean voltages across frequencies from 100 kHz to 300 kHz showed significant differences between the touched and untouched states of the plant.
 
@@ -265,6 +292,8 @@ The final product is an embedded device that include signal filtering, wireless 
 A better audio amplifier could be explored in order to reduce the distortion of the sound.
 Adding an external digital to analog converter is also a possibility in order to upgrade the output. However, this possibility adds new components that will increase the size. Exploring the I2S protocol opens better output.
 The I2S (Inter-IC Sound) protocol is used to transmit digital audio between devices like microcontrollers and DACs. It enables high-quality stereo audio transfer, using a master-slave setup to synchronize data with clock signals. Ideal for applications needing accurate sound transmission.
+
+% Expand discussion
 
 
 \subsection{Conclusion}

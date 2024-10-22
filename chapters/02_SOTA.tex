@@ -1,6 +1,6 @@
 \section{State of the art}
 
-\subsection{Plant as sensor}
+\subsection{Plant becoming a sensor}
 
 \subsubsection{Human-Plant cohabitation}
 
@@ -109,31 +109,6 @@ In their article, Honigman and al. \cite{honigmanTechniquesSweptFrequencyb} adap
 device to be use with an Arduino\footnote{Open source compute unit} microcontroller. This allowing people
 to reproduce the set-up easily.
 
-\subsubsection{Exponential moving average}
-
-The Estimated Mean Average (EMA) is a statistical method that gives more weight to recent data points while still considering past observations. It is commonly used in time series analysis to track trends by smoothing out data fluctuations. Unlike the Simple Moving Average (SMA), the EMA adjusts more quickly to changes, making it useful in fields like finance, engineering, and sensor data analysis.
-
-In finance, the EMA helps identify trends by reacting more sensitively to recent price changes. It is also applied in areas like environmental monitoring, where it processes sensor inputs to reflect real-time changes while minimizing short-term noise.
-
-The formula for EMA is (ref \cite{hunter1986exponentially}):
-
-\begin{math}
-    EMA_t=\alpha⋅Y_t+(1-\alpha)⋅EMA_{t-1}
-    
-\end{math}
-
-Where:
-\begin{itemize}
-    \item $EMA_t$ is the current EMA.
-    \item $Y_t$ is the current data point.
-    \item $\alpha$ is the smoothing factor.
-    \item $EMA_{t-1}$ is the previous EMA.
-\end{itemize}
-
-
-The smoothing factor $\alpha$ controls the weight given to recent data, making EMA more responsive to recent changes while still considering past data.
-
-In the IoT world, it can be useful to have those kind of models, because you can't keep the track of large amount of data. Indeed, the embedded have limited resources. The EMA allows to create a kind of mean with less data to store.
 
 
 \subsubsection{Touch sensors}
@@ -252,6 +227,8 @@ is sometimes associated with cult and esotericism. The product is also not open-
 
 \subsection{Internet of Plants}
 
+\subsubsection{The term}
+
 The Internet of Plants in not a new word. Nevertheless, the term is not that spread around. Aliev and al. \cite{alievInternetPlantsApplication2018} evoked the word. The paper explain that the word is based on the IoT\footnote{Internet of Things}. The paper is using this word to describe a system of sensors to monitor plants and crops. This is really close to the IoT as it is using silicon made sensor to retrieve the data from the plants.
 
 Internet of Plants is especially used for agriculture. In the paper of Steeneken and al. \cite{steenekenSensorsAgricultureInternet2023}, they are explaining that the use of specific sensors could and should be very efficient to boost the productivity of the crops.
@@ -356,7 +333,7 @@ Max/MSP and Pure Data work similarly (ref figure \ref{fig:max_sine_wave} and fig
 
 SuperCollider is algorithmic based and less graphical (ref figure \ref{fig:sc_sine_wave}).
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.7\textwidth]{sc_sine_wave.png}
     \caption{An example of a patch generating a sine wave on SuperCollider}
