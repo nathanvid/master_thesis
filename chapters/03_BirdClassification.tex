@@ -3,17 +3,17 @@
 \subsection{Introduction and Objectives}
 The classification of bird species based on their vocalizations represents a significant challenge in bioacoustics and sound-based AI. This project aims to develop a sound classification system that can identify bird species from audio recordings, using a setup that captures real-world data from natural environments. As an entry point into sound-based AI, this project provided essential insights into the complexities of audio classification, including the need for robust models capable of handling varied environmental sounds.
 
-The primary objectives of this project were twofold. First, it sought to build an effective classification model trained on a large dataset, specifically the BirdCLEF 2020 dataset, which contains recordings of numerous bird species. This dataset provided a rich source of training data for model development, ensuring the system could generalize across different vocalization patterns. Second, the project aimed to create a simple, user-friendly interface to visualize the classification results. This introduced a user experience (UX) component, emphasizing the importance of making complex AI models accessible to users.
+The primary objectives of this project were twofold. First, it sought to build an effective classification model trained on a large dataset, specifically the BirdCLEF 2020 dataset, which contains recordings of numerous bird species. This dataset provided a rich source of training data for model development, ensuring the system could generalize across different vocalization patterns. Second, the project aimed to create a simple, user-friendly interface to visualize the classification results. This introduced a user experience component, emphasizing the importance of making complex AI models accessible to users.
 
 \subsection{State of the Art}
 
 \subsubsection{Convolutional Neural Networks in Audio Classification}
 
-Initial approaches in audio classification focused on converting audio recordings into spectrograms, which could then be processed by Convolutional Neural Networks (CNNs). This method allowed models to capture essential frequency and time-domain patterns in the audio data, which were crucial for classification tasks [Kahl et al., 2017; Sprengel et al., 2016; Lasseck, 2018; Sevilla et al., 2017]. Building on this foundation, researchers introduced Mel-spectrograms, which more accurately represent human auditory perception, making them particularly useful in applications where the nuances of sound frequency are important. To enhance the robustness of CNNs, data augmentation techniques—such as adding Gaussian noise or other audio perturbations—were also applied to the spectrograms, effectively improving model generalization in diverse audio environments [Nanni et al., 2020; Sampathkumar et al., 2022].
+Initial approaches in audio classification focused on converting audio recordings into spectrograms, which could then be processed by Convolutional Neural Networks. This method allowed models to capture essential frequency and time-domain patterns in the audio data, which were crucial for classification tasks \cite{zaman2023survey}. Building on this foundation, researchers introduced Mel-spectrograms, which more accurately represent human auditory perception, making them particularly useful in applications where the nuances of sound frequency are important. To enhance the robustness of CNNs, data augmentation techniques—such as adding Gaussian noise or other audio perturbations—were also applied to the spectrograms, effectively improving model generalization in diverse audio environments for animal audio classification \cite{nanni2020data}\cite{sampathkumar2022tuc}.
 
-Recent advancements in audio classification have utilized deep CNN architectures as backbones for feature extraction, combined with attention mechanisms to focus on the most relevant parts of the audio input. This integration of attention blocks with CNNs has become the foundation of the State-Of-The-Art (SOTA) networks, allowing models to identify and prioritize key features within complex audio signals [Henkel et al., 2021; Conde et al., 2022]. Furthermore, to enhance model generalization and reduce vulnerability to adversarial noise, the mixup data augmentation method has been introduced. By combining multiple audio inputs, this approach generates synthetic samples that improve the model’s ability to generalize across diverse scenarios, significantly reducing the risk of adversarial examples [Zhang et al., 2017]. Some SOTA approaches also focus on Sound Event Detection (SED), employing 2D CNNs to extract critical time-frequency features from log-Mel spectrograms, which are then processed by Recurrent Neural Networks (RNNs) to model temporal dependencies and predict specific sound events [Drossos et al., 2020].
+Then the use of deep CNN architectures as backbones for feature extraction, combined with attention mechanisms to focus on the most relevant parts of the audio input as been highlighted. This integration of attention blocks with CNNs has become the foundation of the SOTA networks, allowing models to identify and prioritize key features with time related context\cite{conde2022few}. Furthermore, to enhance model generalization and reduce vulnerability to adversarial noise, the mixup data augmentation method has been introduced. By combining multiple audio inputs, this approach generates synthetic samples that improve the model’s ability to generalize across diverse scenarios, significantly reducing the risk of adversarial examples \cite{zhang2017mixup}.
 
-The latest advancements in audio classification have introduced additional post-processing techniques aimed at eliminating false detections, refining the classification process to produce more accurate results [Conde et al., 2022]. Another significant development is the use of transformer-based models, which have demonstrated strong performance in handling complex temporal patterns in audio. By leveraging self-attention, transformers can model long-range dependencies within audio data, providing a powerful alternative to traditional CNN and RNN architectures in certain applications [Puget et al., 2021].
+The latest advancements in audio classification have introduced significant development by the use of transformer-based models(and not CNN-backbone with Attention Block), which have demonstrated strong performance in handling complex temporal patterns in audio. By leveraging self-attention, transformers can model long-range dependencies within audio data, providing a powerful alternative to traditional CNN and RNN architectures in certain applications \cite{puget2021stft}.
 
 \subsubsection{Applications of Sound AI in Bioacoustics}
 
@@ -26,39 +26,72 @@ Similarly, Living Sounds is an initiative based in Plymouth, Massachusetts, that
 These advancements in sound AI and their applications in bioacoustics demonstrate the field’s potential to transform environmental monitoring and species classification. Building on these innovations, this project leverages deep learning architectures and real-time audio processing to classify bird species based on their vocalizations, aiming to contribute to bioacoustic research with a practical, deployable system. The following sections will detail the technical framework, model selection, and implementation steps that enabled the creation of this bird species classifier.
 
 \subsection{Data Collection Module}
-The core of the data collection system is a module featuring a sound sensor (INMP441) connected to an ESP32 microcontroller, as shown in Figure \ref{fig}. This module captures environmental sounds and transmits the data wirelessly to an API. To ensure autonomous operation in outdoor conditions, the ESP32 is powered by an 1800 mAh battery delivering 3.85V. For consistent functionality, a voltage regulator is incorporated between the battery and the ESP32 to maintain a stable 3.3V current input. During testing, the module can also be powered by an external generator, ensuring continuous operation. To protect the Printed Circuit Board (PCB) from weather elements, it is encased in a waterproof wooden box, as illustrated in Figure \ref{fig}. The box, laser-cut for precision, is treated with a waterproofing agent, with a hole cut to allow the microphone to remain exposed to capture high-quality sound.
+The core of the data collection system is a module featuring a sound sensor (INMP441) connected to an ESP32 microcontroller, as shown in Figure \ref{fig:pcb_image}. This module captures environmental sounds and transmits the data wirelessly to an API. To ensure autonomous operation in outdoor conditions, the ESP32 is powered by an 1800 mAh battery delivering 3.85V. For consistent functionality, a voltage regulator is incorporated between the battery and the ESP32 to maintain a stable 3.3V current input. During testing, the module can also be powered by an external generator, ensuring continuous operation. To protect the PCB from weather elements, it is encased in a waterproof wooden box, as illustrated in Figure \ref{fig:pcb_box}. The box is treated with a waterproofing agent, with a hole cut to allow the microphone to remain exposed to capture sound.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{PCB_IRL.jpg}
+    \caption{PCB setup with an INMP441 sound sensor connected to an ESP32 microcontroller, powered by a 3.85V, 1800 mAh battery. A voltage regulator ensures a stable 3.3V input to the ESP32 for consistent operation.}
+    \vspace{0.1cm}
+    \label{fig:pcb_image}
+\end{figure}
 
-This project also involves deploying multiple audio modules across targeted areas to monitor wildlife activity. Each module is programmed to capture 5-second audio clips, which are transmitted using HTTP to a REST API built with FastAPI. To optimize energy efficiency, the ESP32 only sends data when the audio signal surpasses a specified energy threshold, preventing the transmission of empty or irrelevant data and conserving battery life. Additionally, to ensure that the server is aware of each module’s activity status, a secondary program sends a “heartbeat” signal to the server every 10 minutes, confirming that the module is still operational even if no audio data has been sent.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{PCBinbox.jpg}
+    \caption{PCB housed in a waterproof box to prevent environmental damage.}
+    \vspace{0.1cm}
+    \label{fig:pcb_box}
+\end{figure}
 
-Modeling and Benchmarking
-This project’s modeling and benchmarking process involves a combination of preprocessing, augmentation, and diverse model architectures, all optimized for the task of bird species classification in natural soundscapes. Using the BirdCLEF dataset as the primary source of training and evaluation data, the pipeline is designed to maximize model generalization, robustness, and accuracy.
 
-1. Preprocessing
-The training data for this project is sourced from the Xeno-Canto database, which provides weakly labeled audio recordings with primary and secondary tags for bird species. Following insights from BirdCLEF challenges that indicate longer audio clips can improve model performance, the preprocessing pipeline extracts 30-second audio segments from each recording. These segments are further divided into six 5-second windows to provide more training samples per clip. Each 5-second window is converted to a Mel-spectrogram using the PyTorch library, with parameters set to a sample rate of 32,000 Hz, 128 Mel bins, a hop size of 512, and a frequency range from 50 to 14,000 Hz. This transformation allows the model to capture frequency and temporal features essential for distinguishing bird vocalizations.
+Each module is programmed to capture 5-second audio clips, which are transmitted using HTTP to a REST API built with FastAPI. To optimize energy efficiency, the ESP32 only sends data when the audio signal surpasses a specified energy threshold, preventing the transmission of empty or irrelevant data and conserving battery life. Additionally, to ensure that the server is aware of each module’s activity status, a secondary program sends a “heartbeat” signal to the server every 10 minutes, confirming that the module is still operational even if no audio data has been sent.
 
-2. Data Augmentation
+\subsection{Preprocessing and data augmentations}
+This modeling and benchmarking process involves a combination of preprocessing, augmentation, and diverse model architectures, all tuned for the task of bird species classification. .
+
+The training data for this project is sourced from BirdCLEF\cite{kahl2020overview} and Xeno-Canto\cite{conf/clef/VellingaP15} database, which provides weakly labeled audio recordings with primary and secondary tags for bird species. Following insights from BirdCLEF challenges that indicate longer audio clips can improve model performance, the preprocessing pipeline extracts 30-second audio segments from each recording. These segments are further divided into six 5-second windows to provide more training samples per clip. Each 5-second window is converted to a Mel-spectrogram, with parameters set to a sample rate of 32,000 Hz, 128 Mel bins, a hop size of 512, and a frequency range from 50 to 14,000 Hz. This transformation allows the model to capture frequency and temporal features essential for distinguishing bird vocalizations.
+
 To enhance the model’s robustness and generalization, several data augmentation techniques are applied:
 
-External Noise: Background noise from external datasets like freefield1010 is added to simulate natural conditions [Stowell et al., 2013].
-Color Noise: Pink and white noise are generated using the Audiomentation library to introduce realistic variations in background noise.
-Mixup: Spectrograms are mixed to create synthetic samples with multiple labels, an augmentation method particularly effective for underrepresented bird species in the dataset. This technique is applied with a probability of 0.7 to prioritize species with limited data.
-Tanh Distortion: A distortion effect is added to recordings using the tanh function, which provides a rounded, "soft clipping" distortion.
-Low-Pass Filter: High frequencies are reduced to emphasize lower frequencies, which are often more prominent in bird vocalizations.
-After augmentation, each spectrogram undergoes Per-Channel Energy Normalization (PCEN) to further standardize the data and improve model stability (see Figures \ref{fig
-} and \ref{fig
-}).
+\begin{itemize}
+    \item External Noise: Background noise from external datasets like freefield1010 is added to simulate natural conditions \cite{stowell2013open}.
+    \item Color Noise: Pink and white noise are generated using the Audiomentation library to introduce realistic variations in background noise.
+    \item Tanh Distortion: A distortion effect is added to recordings using the tanh function, which provides a rounded, "soft clipping" distortion.
+    \item Low-Pass Filter: High frequencies are reduced to emphasize lower frequencies, which are often more prominent in bird vocalizations.
+    \item Mixup: Spectrograms are mixed to create synthetic samples with multiple labels, an augmentation method particularly effective for underrepresented bird species in the dataset. This technique is applied with a probability of 0.7 to prioritize species with limited data\cite{zhang2017mixup}.
+\end{itemize}
 
-3. Model Architectures
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{dataaugmentations.png}
+        \label{fig:augmentation}
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{mixup.png}
+        \label{fig:augmentation}
+    \end{minipage}
+    \caption{}
+    \label{fig:augmentation}
+\end{figure}
+
+After augmentation, each spectrogram undergoes Per-Channel Energy Normalization to further standardize the data and improve model stability.
+
+\subsection{Model training}
 Multiple architectures are employed during the training phase, each selected for its potential in feature extraction or direct classification:
 
-ResNet, EfficientNet, EfficientNetV2, Vision Transformers, Swin Transformers, and Data-Efficient Image Transformers are tested as backbones for either feature extraction or direct prediction [He et al., 2016; Tan et al., 2019; Tan et al., 2021; Dosovitskiy et al., 2020; Liu et al., 2021; Touvron et al., 2021]. In cases where the model is used for feature extraction, an attention block is added to focus on relevant features, enabling more accurate predictions.
-4. Training Routine
+ResNet, EfficientNet, EfficientNetV2, Vision Transformers, Swin Transformers, and Data-Efficient Image Transformers are tested as backbones for either feature extraction or direct prediction \cite{he2016deep,tan2019efficientnet,tan2021efficientnetv2, dosovitskiy2020image, liu2021swin, touvron2021training}. In cases where the model is used for feature extraction, an attention block is added to focus on relevant features, enabling more accurate predictions.
+
 During training, the models are optimized using binary cross-entropy loss, with the AdamW optimizer and a cosine annealing scheduler. The initial learning rate is set at 0.001, with a batch size of 64. This setup balances model convergence with computational efficiency, ensuring that the models are capable of learning the intricate patterns in bird vocalizations.
 
-5. Postprocessing
-Postprocessing involves two thresholding mechanisms to ensure accurate bird call identification and species classification:
+To improve the accuracy for later use, postprocessing involves two thresholding mechanisms to ensure accurate bird call identification and species classification:
 
-Call/No-Call Threshold: To determine whether a bird vocalization is present, the maximum confidence score across all species in each 5-second frame is compared against a threshold. If the score falls below this threshold, the segment is classified as "no call."
-Species Confidence Threshold: A secondary, species-specific threshold is used to ensure confident identification of the bird species. This threshold is parameterized per species, enhancing the reliability of predictions in the presence of diverse acoustic conditions.
-These postprocessing steps, coupled with the training on the BirdCLEF train soundscape dataset, improve the model's accuracy and reduce false positives, especially in noisy environments (see Figure \ref{fig
-}).
+\begin{itemize}
+\item Call/No-Call Threshold: To determine whether a bird vocalization is present, the maximum confidence score across all species in each 5-second frame is compared against a threshold. If the score falls below this threshold, the segment is classified as "no call."
+\itemSpecies Confidence Threshold: A secondary, species-specific threshold is used to ensure confident identification of the bird species. This threshold is parameterized per species, enhancing the reliability of predictions in the presence of diverse acoustic conditions.
+These postprocessing steps, coupled with the training on the BirdCLEF train soundscape dataset, improve the model's accuracy and reduce false positives, especially in noisy environments.
+\begin{itemize}
+
+\subsection{}
