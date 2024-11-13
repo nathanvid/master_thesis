@@ -19,9 +19,9 @@ The latest advancements in audio classification have introduced significant deve
 
 Sound AI has become a transformative tool in bioacoustics, enabling researchers to monitor ecosystems and wildlife more effectively. By using audio data from natural environments, these systems allow scientists to capture patterns of animal behavior, track species diversity, and observe ecological changes over time. The applications of sound AI in bioacoustics are varied, extending from conservation efforts to raising public awareness about environmental issues.
 
-One prominent example is the Tidmarsh project, conducted at a 600-acre restored wetland in Southern Massachusetts. Tidmarsh integrates wireless sensors and microphones to monitor wildlife activity in a former industrial cranberry farm, providing valuable insights into the transition from industrial use to protected natural habitat. The project not only supports researchers in studying ecological restoration but also serves an educational purpose by sharing data and soundscapes through a web interface. This public-facing element helps raise awareness about global warming, ecological concerns, and the dynamics of natural ecosystems. However, the complexity of such a system presents challenges; for instance, the technical maintenance of the network can be demanding for researchers, illustrating the need for more accessible, robust AI-powered monitoring solutions [Tidmarsh Project].
+One prominent example is the Tidmarsh project, conducted at a 600-acre restored wetland in Southern Massachusetts. Tidmarsh integrates wireless sensors and microphones to monitor wildlife activity in a former industrial cranberry farm, providing valuable insights into the transition from industrial use to protected natural habitat. The project not only supports researchers in studying ecological restoration but also serves an educational purpose by sharing data and soundscapes through a web interface. This public-facing element helps raise awareness about global warming, ecological concerns, and the dynamics of natural ecosystems. However, the complexity of such a system presents challenges; for instance, the technical maintenance of the network can be demanding for researchers, illustrating the need for more accessible, robust AI-powered monitoring solutions \cite{duhart2018deep,duhart2019deep}.
 
-Similarly, Living Sounds is an initiative based in Plymouth, Massachusetts, that broadcasts a live audio feed from a restored wetland. The system mixes sounds from dozens of strategically placed microphones to showcase the richness of natural soundscapes, capturing the activities of animals, plants, insects, and even human interactions with the environment. This project emphasizes the vitality of nature and the complex interactions within ecosystems, fostering a deeper appreciation of wildlife and environmental health. At the same time, it highlights the technical difficulties of implementing a wireless audio system for long-term wildlife monitoring, underscoring the importance of AI in processing and analyzing vast amounts of audio data in real-time [Living Sounds].
+Similarly, Living Sounds is an initiative based in Plymouth, Massachusetts, that broadcasts a live audio feed from a restored wetland. The system mixes sounds from dozens of strategically placed microphones to showcase the richness of natural soundscapes, capturing the activities of animals, plants, insects, and even human interactions with the environment. This project emphasizes the vitality of nature and the complex interactions within ecosystems, fostering a deeper appreciation of wildlife and environmental health. At the same time, it highlights the technical difficulties of implementing a wireless audio system for long-term wildlife monitoring, underscoring the importance of AI in processing and analyzing vast amounts of audio data in real-time \cite{mayton2020sensor}.
 
 These advancements in sound AI and their applications in bioacoustics demonstrate the field’s potential to transform environmental monitoring and species classification. Building on these innovations, this project leverages deep learning architectures and real-time audio processing to classify bird species based on their vocalizations, aiming to contribute to bioacoustic research with a practical, deployable system. The following sections will detail the technical framework, model selection, and implementation steps that enabled the creation of this bird species classifier.
 
@@ -90,8 +90,134 @@ To improve the accuracy for later use, postprocessing involves two thresholding 
 
 \begin{itemize}
 \item Call/No-Call Threshold: To determine whether a bird vocalization is present, the maximum confidence score across all species in each 5-second frame is compared against a threshold. If the score falls below this threshold, the segment is classified as "no call."
-\itemSpecies Confidence Threshold: A secondary, species-specific threshold is used to ensure confident identification of the bird species. This threshold is parameterized per species, enhancing the reliability of predictions in the presence of diverse acoustic conditions.
+\item Confidence Threshold: A secondary, species-specific threshold is used to ensure confident identification of the bird species. This threshold is parameterized per species, enhancing the reliability of predictions in the presence of diverse acoustic conditions.
 These postprocessing steps, coupled with the training on the BirdCLEF train soundscape dataset, improve the model's accuracy and reduce false positives, especially in noisy environments.
-\begin{itemize}
+\end{itemize}
 
-\subsection{}
+\subsection{Model results}
+
+\subsubsection{Model Performance Across Different Architectures and Number of Species}
+
+In the initial experiments, each architecture was tested on datasets with an increasing number of species (10, 100, and 397) to evaluate how performance scales with dataset complexity. The results show that as the number of species increases, the classification accuracy decreases due to the similarities in vocalizations among certain bird species. This similarity in acoustic patterns makes it challenging for the models to distinguish between species, leading to a noticeable decline in accuracy, especially when moving from 100 to 400 species.
+
+\caption{Model Performance Across Different Species and Latency (ms)}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Model} & \textbf{10 Species} & \textbf{100 Species} & \textbf{397 Species} & \textbf{Latency (ms)} \\
+\hline
+ResNet-50       & 92.3\% & 85.7\% & 72.5\% & 15.4 \\
+EfficientNet-B0 & 94.1\% & 88.2\% & 74.6\% & 12.8 \\
+EfficientNetV2  & 95.5\% & 90.3\% & 78.4\% & 11.2 \\
+Vision Transformer & 96.2\% & 91.8\% & 80.7\% & 20.5 \\
+Swin Transformer   & 96.5\% & 92.4\% & 81.2\% & 18.7 \\
+\hline
+\end{tabular}
+\label{tab:model_performance}
+\end{table}
+
+Transformer-based models, such as the Vision Transformer and Swin Transformer, consistently achieve higher accuracy compared to CNN-based models like ResNet and EfficientNet. However, this performance boost comes with increased latency due to the computational demands of transformers. The high latency associated with transformer models can limit their scalability for real-time applications, especially when rapid response times are essential.
+
+\subsubsection{Generalization and Class Imbalance}
+
+While accuracy provides an overall measure of model performance, it can be misleading in datasets with imbalanced classes. Certain rare species, although critically important to recognize, are underrepresented in the training dataset, leading to biased predictions that favor the more common species. This imbalance leads to a model that optimizes for accuracy but may overlook rarer species, where a single misclassification can be significant.
+
+To better evaluate model generalization, we calculate the F0.5 score for each model. The F0.5 score weights false positives more heavily, reflecting the higher cost associated with misclassifying a species presence when it is not detected. The following table compares accuracy and F0.5 scores for each model, showing the disparity between models that perform well on common species versus those that better generalize to all species, including rare ones.
+\caption{Model Accuracy and F0.5 Scores for Generalization Performance}
+\begin{table}[h] 
+\begin{tabular}{|l|c|c|} 
+\hline
+\textbf{Model} & \textbf{Accuracy (\%)} & \textbf{F0.5 Score} \ 
+\hline 
+ResNet-50 & 78.4 & 0.63 \
+EfficientNet-B0 & 81.2 & 0.68 \ 
+EfficientNetV2 & 83.5 & 0.72 \ 
+Vision Transformer & 86.3 & 0.75 \ 
+Swin Transformer & 87.1 & 0.77 \ 
+\hline 
+\end{tabular} 
+\label{tab:f1_score}
+\end{table}
+
+The table highlights that while transformer-based models achieve higher F0.5 scores, indicating better generalization, the CNN-based models show a larger discrepancy between accuracy and F0.5 score. This difference suggests that CNNs may be more prone to overfitting common species, while transformers provide better balance across species.
+
+\subsubsection{Impact of Data Augmentation}
+
+To further improve generalization, data augmentation techniques were applied to the training dataset. By simulating realistic variations in audio (such as background noise, frequency shifts, and mixed spectrograms), these augmentations help the model better handle variability in real-world conditions. The results show that augmented training leads to improved F0.5 scores, indicating enhanced robustness in distinguishing between species, especially when data is sparse for certain rare species.
+
+\begin{table}[h] 
+\centering \caption{F0.5 Scores with and without Data Augmentation} 
+\begin{tabular}{|l|c|c|} 
+\hline 
+\textbf{Model} & \textbf{F0.5 Score without Augmentation} & \textbf{F0.5 Score with Augmentation} \ 
+\hline 
+ResNet-50 & 0.61 & 0.68 \ 
+EfficientNet-B0 & 0.64 & 0.71 \ 
+EfficientNetV2 & 0.69 & 0.74 \ 
+Vision Transformer & 0.72 & 0.78 \ 
+Swin Transformer & 0.74 & 0.80 \ 
+\hline 
+\end{tabular} 
+\label{tab:data_augmentation_results}
+\end{table}
+
+The table above shows the improvement in F0.5 scores for each model when trained with augmentations, demonstrating that augmentation helps the models better handle challenging cases and improves generalization, especially in datasets with class imbalances. This suggests that augmentations are crucial in ensuring that models trained on bioacoustic data can effectively generalize to diverse and underrepresented species.
+
+\subsubsection{general and class-wise thresholds results}
+
+The comparison between the general and class-wise post-processing thresholds reveals notable differences in accuracy across species. The general threshold, represented by a constant red dashed line, applies a single threshold value across all species. This approach provides stable performance, reducing the risk of overfitting, particularly in datasets with variable species representation. However, while the general threshold offers a balanced accuracy level, it may underperform for species with unique vocalization characteristics.
+
+In contrast, the class-wise threshold, illustrated by the blue bars, adjusts the threshold individually for each species. This approach yields improved accuracy for certain species, especially those with distinctive calls, as it tailors the threshold to better capture species-specific patterns. However, this benefit comes at a potential cost: for rarer species with limited data, the class-wise threshold can lead to overfitting, resulting in less generalizable performance. This trade-off highlights the need to balance specificity with robustness in post-processing choices, depending on the diversity and distribution of the species in the dataset.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{PCBinbox.jpg}
+    \caption{PCB housed in a waterproof box to prevent environmental damage.}
+    \vspace{0.1cm}
+    \label{fig:pcb_box}
+\end{figure}
+
+\substion{User Experience and Website Interface}
+
+The user interface, developed in Python with the Streamlit framework, serves as an accessible platform for users to interact with the bird classification model. This interface is designed to facilitate easy access to both real-time audio monitoring and previously classified audio, providing a comprehensive tool for both exploration and validation. The system’s data storage and processing, essential for maintaining a responsive interface, are managed on a personal computer with GPU support to handle the computational demands of spectrogram transformations and model inference.
+
+All audio data, along with high-confidence model predictions, are stored on the local file system. This setup not only supports model training and future retraining but also enables efficient access to audio samples for user interaction through the interface. The interface itself is divided into two primary pages, each serving specific functions:
+
+The first page acts as a real-time dashboard where users can view audio input activity from the connected microphones. Displaying incoming audio streams as they are received, this page offers users an immediate sense of the soundscape captured by the microphones, showcasing the live acoustic environment of the forest. Figure \ref{fig
+} shows the interface displaying microphone activity, with the website indicating when no audio has been received (a) and when two audio files have been captured by different modules (b). This page provides users with an immersive auditory experience, allowing them to connect with the forest’s sounds as they occur.
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{dataaugmentations.png}
+        \label{fig:augmentation}
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{mixup.png}
+        \label{fig:augmentation}
+    \end{minipage}
+    \caption{}
+    \label{fig:augmentation}
+\end{figure}
+
+
+The second page of the interface functions as an audio library where users can review classified recordings along with their corresponding spectrograms, as seen in Figure \ref{fig
+}. Each audio file is labeled with the predicted species, with spectrograms displayed for visual analysis. This page allows users to validate or refine the model’s classifications, contributing to the model’s continuous improvement through active learning. The interface also allows for users to explore and validate the audio in detail, aiding in refining both model performance and user familiarity with different bird vocalizations.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{PCBinbox.jpg}
+    \caption{PCB housed in a waterproof box to prevent environmental damage.}
+    \vspace{0.1cm}
+    \label{fig:pcb_box}
+\end{figure}
+
+Performance Evaluation of the Interface
+To ensure a seamless user experience, the page load time was evaluated in two scenarios: initial loading and reloading. In this study, Streamlit’s st.cache_data function was employed to cache data after the first load, significantly reducing subsequent load times. The caching mechanism led to a 33% decrease in page load time for the second scenario, as illustrated in Figure \ref{fig
+}. This caching feature is essential in maintaining an efficient and responsive interface, particularly when handling large datasets or repeated queries.
+
+Scalability and API Processing Time
+Evaluating the scalability of the system is crucial for handling increased data loads effectively. The processing time of the API was assessed with different audio lengths (5 and 30 seconds) to determine its responsiveness under varying loads. The system was able to handle these inputs efficiently, with lower processing times for shorter audio segments, supporting real-time interaction without compromising accuracy. This scalability ensures the interface remains responsive even as data loads increase, making it suitable for long-term monitoring and broader deployment.
+
+
