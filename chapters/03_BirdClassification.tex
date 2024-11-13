@@ -191,7 +191,7 @@ The first page acts as a real-time dashboard where users can view audio input ac
         \centering
         \includegraphics[width=0.9\linewidth]{dataaugmentations.png}
         \label{fig:augmentation}
-    \end{minipage}%
+    \end{minipage}
     \begin{minipage}{.5\textwidth}
         \centering
         \includegraphics[width=.9\linewidth]{mixup.png}
@@ -202,8 +202,7 @@ The first page acts as a real-time dashboard where users can view audio input ac
 \end{figure}
 
 
-The second page of the interface functions as an audio library where users can review classified recordings along with their corresponding spectrograms, as seen in Figure \ref{fig
-}. Each audio file is labeled with the predicted species, with spectrograms displayed for visual analysis. This page allows users to validate or refine the model’s classifications, contributing to the model’s continuous improvement through active learning. The interface also allows for users to explore and validate the audio in detail, aiding in refining both model performance and user familiarity with different bird vocalizations.
+The second page of the interface functions as an audio library where users can review classified recordings along with their corresponding spectrograms, as seen in Figure \ref{fig}. Each audio file is labeled with the predicted species, with spectrograms displayed for visual analysis. This page allows users to validate or refine the model’s classifications, contributing to the model’s continuous improvement through active learning. The interface also allows for users to explore and validate the audio in detail, aiding in refining both model performance and user familiarity with different bird vocalizations.
 
 \begin{figure}[h]
     \centering
@@ -214,7 +213,7 @@ The second page of the interface functions as an audio library where users can r
 \end{figure}
 
 Performance Evaluation of the Interface
-To ensure a seamless user experience, the page load time was evaluated in two scenarios: initial loading and reloading. In this study, Streamlit’s st.cache_data function was employed to cache data after the first load, significantly reducing subsequent load times. The caching mechanism led to a 33% decrease in page load time for the second scenario, as illustrated in Figure \ref{fig
+To ensure a seamless user experience, the page load time was evaluated in two scenarios: initial loading and reloading. In this study, Streamlit’s st.cache_data function was employed to cache data after the first load, significantly reducing subsequent load times. The caching mechanism led to a 33\% decrease in page load time for the second scenario, as illustrated in Figure \ref{fig
 }. This caching feature is essential in maintaining an efficient and responsive interface, particularly when handling large datasets or repeated queries.
 
 Scalability and API Processing Time
