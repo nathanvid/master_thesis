@@ -219,3 +219,24 @@ Scalability and API Processing Time
 Evaluating the scalability of the system is crucial for handling increased data loads effectively. The processing time of the API was assessed with different audio lengths (5 and 30 seconds) to determine its responsiveness under varying loads. The system was able to handle these inputs efficiently, with lower processing times for shorter audio segments, supporting real-time interaction without compromising accuracy. This scalability ensures the interface remains responsive even as data loads increase, making it suitable for long-term monitoring and broader deployment.
 
 
+Certainly! Here’s a revised version of the Discussion and Conclusion section, structured in a style similar to a research paper:
+
+Discussion
+This study demonstrates the potential of sound-based AI in bioacoustic monitoring, specifically for the task of bird species classification in natural environments. By employing deep learning architectures, including CNNs and transformers, we achieved promising accuracy in identifying bird species from audio recordings. However, several limitations emerged during development and evaluation, which suggest directions for future research and improvements.
+
+One significant limitation is the challenge of generalization, particularly for rare species with limited data representation. Despite employing augmentation techniques, the model tended to misclassify these underrepresented classes, underscoring the need for a more balanced dataset. Rare species are often critical to conservation efforts, and thus future data collection efforts should prioritize expanding recordings of these classes. Potential solutions include collaborating with conservation initiatives and exploring crowd-sourced bioacoustic data to build a more comprehensive and balanced training dataset.
+
+Additionally, transformer-based architectures improved classification accuracy but introduced higher latency, posing a constraint for real-time applications. Future research could address this by exploring model optimization techniques, such as quantization and pruning, which could reduce latency without sacrificing accuracy. These optimizations would allow transformer-based models to be more viable for real-time monitoring tasks in field settings.
+
+Another consideration is the system's reliance on GPU resources for spectrogram transformation and model inference. While the personal computer-based setup worked effectively in a controlled environment, deploying such a system in remote locations may prove challenging. Future iterations could focus on developing an optimized version of the model for edge devices, reducing the dependency on high computational power. Such edge deployment would enable autonomous, self-sustaining monitoring stations in diverse and resource-limited environments, enhancing the system’s scalability.
+
+Conclusion
+In summary, this research presents a viable approach to bird species classification through the integration of sound-based AI and an intuitive user interface. The system, which incorporates both real-time audio streaming and an audio library with active learning capabilities, offers a user-centered tool that enables users to interact with bioacoustic data, validate predictions, and contribute to model improvements. These features make the system valuable not only for researchers but also for education and public engagement, fostering greater awareness and appreciation of natural soundscapes.
+
+Despite limitations such as class imbalance, latency, and computational constraints, the model achieved promising results, demonstrating that deep learning can enhance our ability to monitor biodiversity in real time. Moving forward, addressing these limitations through enhanced data collection, model optimization, and edge deployment will be key to making sound-based AI more accessible and scalable. This work contributes to the growing field of ecological AI and highlights the potential for sound AI to play a crucial role in conservation and biodiversity monitoring, offering new insights into the dynamics of natural ecosystems.
+
+
+Here’s a brief transition to introduce the next project:
+
+Building on the foundations of sound-based classification developed in this project, the next phase of research focuses on generating realistic and emotionally expressive speech through Text-to-Speech (TTS) technology. This project aims to explore how synthesized voices can convey emotions, enhancing human-computer interactions by creating more lifelike and immersive auditory experiences.
+
