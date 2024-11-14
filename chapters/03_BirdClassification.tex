@@ -177,7 +177,7 @@ In contrast, the class-wise threshold, illustrated by the blue bars, adjusts the
     \label{fig:pcb_box}
 \end{figure}
 
-\substion{User Experience and Website Interface}
+\subsection{User Experience and Website Interface}
 
 The user interface, developed in Python with the Streamlit framework, serves as an accessible platform for users to interact with the bird classification model. This interface is designed to facilitate easy access to both real-time audio monitoring and previously classified audio, providing a comprehensive tool for both exploration and validation. The system’s data storage and processing, essential for maintaining a responsive interface, are managed on a personal computer with GPU support to handle the computational demands of spectrogram transformations and model inference.
 
@@ -213,7 +213,7 @@ The second page of the interface functions as an audio library where users can r
 \end{figure}
 
 Performance Evaluation of the Interface
-To ensure a seamless user experience, the page load time was evaluated in two scenarios: initial loading and reloading. In this study, Streamlit’s st.cache_data function was employed to cache data after the first load, significantly reducing subsequent load times. The caching mechanism led to a 33\% decrease in page load time for the second scenario, as illustrated in Figure \ref{fig}. This caching feature is essential in maintaining an efficient and responsive interface, particularly when handling large datasets or repeated queries.
+To ensure a seamless user experience, the page load time was evaluated in two scenarios: initial loading and reloading. In this study, Streamlit’s \textbf{cache_data} function was employed to cache data after the first load, significantly reducing subsequent load times. The caching mechanism led to a 33\% decrease in page load time for the second scenario, as illustrated in Figure \ref{fig}. This caching feature is essential in maintaining an efficient and responsive interface, particularly when handling large datasets or repeated queries.
 
 Scalability and API Processing Time
 Evaluating the scalability of the system is crucial for handling increased data loads effectively. The processing time of the API was assessed with different audio lengths (5 and 30 seconds) to determine its responsiveness under varying loads. The system was able to handle these inputs efficiently, with lower processing times for shorter audio segments, supporting real-time interaction without compromising accuracy. This scalability ensures the interface remains responsive even as data loads increase, making it suitable for long-term monitoring and broader deployment.
