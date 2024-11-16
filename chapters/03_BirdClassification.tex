@@ -181,6 +181,7 @@ In contrast, the class-wise threshold, illustrated by the blue bars, adjusts the
 \end{figure}
 
 \subsection{Website Interface}
+\subsubsection{Interface explanation}
 
 The user interface, developed in Python with the Streamlit framework, serves as an accessible platform for users to interact with the bird classification model. This interface is designed to facilitate easy access to both real-time audio monitoring and previously classified audio, providing a comprehensive tool for both exploration and validation. The system’s data storage and processing, essential for maintaining a responsive interface, are managed on a personal computer with GPU support to handle the computational demands of spectrogram transformations and model inference.
 
@@ -196,33 +197,45 @@ The first page acts as a real-time dashboard where users can view audio input ac
     \end{minipage}%
     \begin{minipage}{.5\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{mixup.png}
+        \includegraphics[width=0.9\linewidth]{homepageoff.png}
     \end{minipage}
-    \caption{}
+    \caption{Figure: Comparison of the website’s homepage in inactive (off) and active (on) states. The inactive state (left) indicates no audio received from the modules, while the active state (right) displays the audio streams captured by different modules in real time.}
     \label{fig:website}
 \end{figure}
 
 
-The second page of the interface functions as an audio library where users can review classified recordings along with their corresponding spectrograms, as seen in Figure\ref{fig}. Each audio file is labeled with the predicted species, with spectrograms displayed for visual analysis. This page allows users to validate or refine the model’s classifications, contributing to the model’s continuous improvement through active learning. The interface also allows for users to explore and validate the audio in detail, aiding in refining both model performance and user familiarity with different bird vocalizations.
+The second page of the interface functions as an audio library where users can review classified recordings along with their corresponding spectrograms, as seen in Figure\ref{fig:website_lib}. Each audio file is labeled with the predicted species, with spectrograms displayed for visual analysis. This page allows users to validate or refine the model’s classifications, contributing to the model’s continuous improvement through active learning. The interface also allows for users to explore and validate the audio in detail, aiding in refining both model performance and user familiarity with different bird vocalizations.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{PCBinbox.jpg}
-    \caption{PCB housed in a waterproof box to prevent environmental damage.}
+    \includegraphics[width=0.8\textwidth]{librarypage.png}
+    \caption{The library page of the website, showcasing stored audio files along with their corresponding spectrograms. Users can listen to the audio, view predictions, and validate or correct the classifications made by the AI for active learning purposes.}
     \vspace{0.1cm}
-    \label{fig:pcb_box}
+    \label{fig:website_lib}
 \end{figure}
 
-Performance Evaluation of the Interface
-To ensure a seamless user experience, the page load time was evaluated in two scenarios: initial loading and reloading. In this study, Streamlit’s \textbf{cache data} function was employed to cache data after the first load, significantly reducing subsequent load times. The caching mechanism led to a 33\% decrease in page load time for the second scenario, as illustrated in Figure \ref{fig}. This caching feature is essential in maintaining an efficient and responsive interface, particularly when handling large datasets or repeated queries.
+\subsubsection{Performance Evaluation of the Interface}
+To ensure a seamless user experience, the page load time was evaluated in two scenarios: initial loading and reloading. In this study, Streamlit’s \textbf{cache data} function was employed to cache data after the first load, significantly reducing subsequent load times. The caching mechanism led to a 33\% decrease in page load time for the second scenario, as illustrated in Figure \ref{fig:reactivity_lib}. This caching feature is essential in maintaining an efficient and responsive interface, particularly when handling large datasets or repeated queries.
 
-Scalability and API Processing Time
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{reactivitylibrary.png}
+    \caption{ Reactivity analysis of the library page loading times. The comparison highlights the significant reduction in load time achieved using caching mechanisms, improving user experience by ensuring faster access to stored data.}
+    \vspace{0.1cm}
+    \label{fig:reactivity_lib}
+\end{figure}
+
 Evaluating the scalability of the system is crucial for handling increased data loads effectively. The processing time of the API was assessed with different audio lengths (5 and 30 seconds) to determine its responsiveness under varying loads. The system was able to handle these inputs efficiently, with lower processing times for shorter audio segments, supporting real-time interaction without compromising accuracy. This scalability ensures the interface remains responsive even as data loads increase, making it suitable for long-term monitoring and broader deployment.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{reactivityAPI.png}
+    \caption{Reactivity analysis of API processing times for audio inputs of different durations.}
+    \vspace{0.1cm}
+    \label{fig:reactivity_api}
+\end{figure}
 
-Certainly! Here’s a revised version of the Discussion and Conclusion section, structured in a style similar to a research paper:
-
-Discussion
+\subsection{Discussion}
 This study demonstrates the potential of sound-based AI in bioacoustic monitoring, specifically for the task of bird species classification in natural environments. By employing deep learning architectures, including CNNs and transformers, we achieved promising accuracy in identifying bird species from audio recordings. However, several limitations emerged during development and evaluation, which suggest directions for future research and improvements.
 
 One significant limitation is the challenge of generalization, particularly for rare species with limited data representation. Despite employing augmentation techniques, the model tended to misclassify these underrepresented classes, underscoring the need for a more balanced dataset. Rare species are often critical to conservation efforts, and thus future data collection efforts should prioritize expanding recordings of these classes. Potential solutions include collaborating with conservation initiatives and exploring crowd-sourced bioacoustic data to build a more comprehensive and balanced training dataset.
@@ -231,13 +244,10 @@ Additionally, transformer-based architectures improved classification accuracy b
 
 Another consideration is the system's reliance on GPU resources for spectrogram transformation and model inference. While the personal computer-based setup worked effectively in a controlled environment, deploying such a system in remote locations may prove challenging. Future iterations could focus on developing an optimized version of the model for edge devices, reducing the dependency on high computational power. Such edge deployment would enable autonomous, self-sustaining monitoring stations in diverse and resource-limited environments, enhancing the system’s scalability.
 
-Conclusion
+\subsection{Conclusion}
 In summary, this research presents a viable approach to bird species classification through the integration of sound-based AI and an intuitive user interface. The system, which incorporates both real-time audio streaming and an audio library with active learning capabilities, offers a user-centered tool that enables users to interact with bioacoustic data, validate predictions, and contribute to model improvements. These features make the system valuable not only for researchers but also for education and public engagement, fostering greater awareness and appreciation of natural soundscapes.
 
 Despite limitations such as class imbalance, latency, and computational constraints, the model achieved promising results, demonstrating that deep learning can enhance our ability to monitor biodiversity in real time. Moving forward, addressing these limitations through enhanced data collection, model optimization, and edge deployment will be key to making sound-based AI more accessible and scalable. This work contributes to the growing field of ecological AI and highlights the potential for sound AI to play a crucial role in conservation and biodiversity monitoring, offering new insights into the dynamics of natural ecosystems.
 
-
-Here’s a brief transition to introduce the next project:
-
-Building on the foundations of sound-based classification developed in this project, the next phase of research focuses on generating realistic and emotionally expressive speech through Text-to-Speech (TTS) technology. This project aims to explore how synthesized voices can convey emotions, enhancing human-computer interactions by creating more lifelike and immersive auditory experiences.
+Building on the foundations of sound-based classification developed in this project, the next phase of research focuses on generating realistic and emotionally expressive speech through Text-to-Speech technology. This project aims to explore how synthesized voices can convey emotions, enhancing human-computer interactions by creating more lifelike and immersive auditory experiences.
 
