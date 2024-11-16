@@ -151,7 +151,7 @@ As we present before to improve generalization, data augmentation techniques wer
 \begin{table}[h]  
 \begin{tabular}{|l|c|c|}{0.6\textwidth} 
 \hline 
-\textbf{Model} & \textbf{F0.5 Score without Augmentation} & \textbf{F0.5 Score with Augmentation} \\
+\textbf{Model} & \textbf{F0.5 Score w/out Aug} & \textbf{F0.5 Score w/ Aug} \\
 \hline 
 ResNet-50 & 0.61 & 0.68 \\
 EfficientNet-B0 & 0.64 & 0.71 \\
@@ -160,7 +160,7 @@ Vision Transformer & 0.72 & 0.78 \\
 Swin Transformer & 0.74 & 0.80 \\
 \hline 
 \end{tabular} 
-\caption{F0.5 Scores with and without Data Augmentation} 
+\caption{F0.5 Scores without and with Data Augmentation} 
 \label{tab:data_augmentation_results}
 \end{table}
 
@@ -206,9 +206,9 @@ The first page acts as a real-time dashboard where users can view audio input ac
 
 The second page of the interface functions as an audio library where users can review classified recordings along with their corresponding spectrograms, as seen in Figure\ref{fig:website_lib}. Each audio file is labeled with the predicted species, with spectrograms displayed for visual analysis. This page allows users to validate or refine the model’s classifications, contributing to the model’s continuous improvement through active learning. The interface also allows for users to explore and validate the audio in detail, aiding in refining both model performance and user familiarity with different bird vocalizations.
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\textwidth]{librarypage.png}
+    \includegraphics[width=1;1\textwidth]{librarypage.png}
     \caption{The library page of the website, showcasing stored audio files along with their corresponding spectrograms. Users can listen to the audio, view predictions, and validate or correct the classifications made by the AI for active learning purposes.}
     \vspace{0.1cm}
     \label{fig:website_lib}
@@ -217,7 +217,7 @@ The second page of the interface functions as an audio library where users can r
 \subsubsection{Performance Evaluation of the Interface}
 To ensure a seamless user experience, the page load time was evaluated in two scenarios: initial loading and reloading. In this study, Streamlit’s \textbf{cache data} function was employed to cache data after the first load, significantly reducing subsequent load times. The caching mechanism led to a 33\% decrease in page load time for the second scenario, as illustrated in Figure \ref{fig:reactivity_lib}. This caching feature is essential in maintaining an efficient and responsive interface, particularly when handling large datasets or repeated queries.
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{reactivitylibrary.png}
     \caption{ Reactivity analysis of the library page loading times. The comparison highlights the significant reduction in load time achieved using caching mechanisms, improving user experience by ensuring faster access to stored data.}
@@ -227,7 +227,7 @@ To ensure a seamless user experience, the page load time was evaluated in two sc
 
 Evaluating the scalability of the system is crucial for handling increased data loads effectively. The processing time of the API was assessed with different audio lengths (5 and 30 seconds) to determine its responsiveness under varying loads. The system was able to handle these inputs efficiently, with lower processing times for shorter audio segments, supporting real-time interaction without compromising accuracy. This scalability ensures the interface remains responsive even as data loads increase, making it suitable for long-term monitoring and broader deployment.
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{reactivityAPI.png}
     \caption{Reactivity analysis of API processing times for audio inputs of different durations.}
