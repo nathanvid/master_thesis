@@ -148,7 +148,7 @@ The table highlights that while transformer-based models achieve higher F0.5 sco
 
 As we present before to improve generalization, data augmentation techniques were applied to the training dataset. By simulating realistic variations in audio, these augmentations help the model better handle variability in real-world conditions.
 
-\begin{table}[h]  
+\begin{table}[h][.4\textwidth]  
 \begin{tabular}{|l|c|c|} 
 \hline 
 \textbf{Model} & \textbf{F0.5 Score without Augmentation} & \textbf{F0.5 Score with Augmentation} \\
@@ -186,26 +186,24 @@ The user interface, developed in Python with the Streamlit framework, serves as 
 
 All audio data, along with high-confidence model predictions, are stored on the local file system. This setup not only supports model training and future retraining but also enables efficient access to audio samples for user interaction through the interface. The interface itself is divided into two primary pages, each serving specific functions:
 
-The first page acts as a real-time dashboard where users can view audio input activity from the connected microphones. Displaying incoming audio streams as they are received, this page offers users an immediate sense of the soundscape captured by the microphones, showcasing the live acoustic environment of the forest. Figure \ref{fig:website} shows the interface displaying microphone activity, with the website indicating when no audio has been received (a) and when two audio files have been captured by different modules (b). This page provides users with an immersive auditory experience, allowing them to connect with the forest’s sounds as they occur.
+The first page acts as a real-time dashboard where users can view audio input activity from the connected microphones. Displaying incoming audio streams as they are received, this page offers users an immediate sense of the soundscape captured by the microphones, showcasing the live acoustic environment of the forest. Figure\ref{fig:website} shows the interface displaying microphone activity, with the website indicating when no audio has been received (a) and when two audio files have been captured by different modules (b). This page provides users with an immersive auditory experience, allowing them to connect with the forest’s sounds as they occur.
 
 \begin{figure}[h!]
     \centering
     \begin{minipage}{.5\textwidth}
         \centering
         \includegraphics[width=0.9\linewidth]{homepageon.png}
-        \label{fig:augmentation}
-    \end{minipage}
+    \end{minipage}%
     \begin{minipage}{.5\textwidth}
         \centering
-        \includegraphics[width=.9\linewidth]{mixup.png}
-        \label{fig:augmentation}
+        \includegraphics[width=0.9\linewidth]{mixup.png}
     \end{minipage}
     \caption{}
     \label{fig:website}
 \end{figure}
 
 
-The second page of the interface functions as an audio library where users can review classified recordings along with their corresponding spectrograms, as seen in Figure \ref{fig}. Each audio file is labeled with the predicted species, with spectrograms displayed for visual analysis. This page allows users to validate or refine the model’s classifications, contributing to the model’s continuous improvement through active learning. The interface also allows for users to explore and validate the audio in detail, aiding in refining both model performance and user familiarity with different bird vocalizations.
+The second page of the interface functions as an audio library where users can review classified recordings along with their corresponding spectrograms, as seen in Figure\ref{fig}. Each audio file is labeled with the predicted species, with spectrograms displayed for visual analysis. This page allows users to validate or refine the model’s classifications, contributing to the model’s continuous improvement through active learning. The interface also allows for users to explore and validate the audio in detail, aiding in refining both model performance and user familiarity with different bird vocalizations.
 
 \begin{figure}[h]
     \centering
@@ -216,7 +214,7 @@ The second page of the interface functions as an audio library where users can r
 \end{figure}
 
 Performance Evaluation of the Interface
-To ensure a seamless user experience, the page load time was evaluated in two scenarios: initial loading and reloading. In this study, Streamlit’s \textbf{cache_data} function was employed to cache data after the first load, significantly reducing subsequent load times. The caching mechanism led to a 33\% decrease in page load time for the second scenario, as illustrated in Figure \ref{fig}. This caching feature is essential in maintaining an efficient and responsive interface, particularly when handling large datasets or repeated queries.
+To ensure a seamless user experience, the page load time was evaluated in two scenarios: initial loading and reloading. In this study, Streamlit’s \textbf{cache data} function was employed to cache data after the first load, significantly reducing subsequent load times. The caching mechanism led to a 33\% decrease in page load time for the second scenario, as illustrated in Figure \ref{fig}. This caching feature is essential in maintaining an efficient and responsive interface, particularly when handling large datasets or repeated queries.
 
 Scalability and API Processing Time
 Evaluating the scalability of the system is crucial for handling increased data loads effectively. The processing time of the API was assessed with different audio lengths (5 and 30 seconds) to determine its responsiveness under varying loads. The system was able to handle these inputs efficiently, with lower processing times for shorter audio segments, supporting real-time interaction without compromising accuracy. This scalability ensures the interface remains responsive even as data loads increase, making it suitable for long-term monitoring and broader deployment.
