@@ -47,7 +47,7 @@ The core of the data collection system is a module featuring a sound sensor (INM
 Each module is programmed to capture 5-second audio clips, which are transmitted using HTTP to a REST API built with FastAPI. To optimize energy efficiency, the ESP32 only sends data when the audio signal surpasses a specified energy threshold, preventing the transmission of empty or irrelevant data and conserving battery life. Additionally, to ensure that the server is aware of each module’s activity status, a secondary program sends a “heartbeat” signal to the server every 10 minutes, confirming that the module is still operational even if no audio data has been sent.
 
 \subsection{Preprocessing and data augmentations}
-This modeling and benchmarking process involves a combination of preprocessing, augmentation, and diverse model architectures, all tuned for the task of bird species classification. .
+This modeling and benchmarking process involves firstly a combination of preprocessing, augmentation, and diverse model architectures, all tuned for the task of bird species classification.
 
 The training data for this project is sourced from BirdCLEF\cite{kahl2020overview} and Xeno-Canto\cite{conf/clef/VellingaP15} database, which provides weakly labeled audio recordings with primary and secondary tags for bird species. Following insights from BirdCLEF challenges that indicate longer audio clips can improve model performance, the preprocessing pipeline extracts 30-second audio segments from each recording. These segments are further divided into six 5-second windows to provide more training samples per clip. Each 5-second window is converted to a Mel-spectrogram, with parameters set to a sample rate of 32,000 Hz, 128 Mel bins, a hop size of 512, and a frequency range from 50 to 14,000 Hz. This transformation allows the model to capture frequency and temporal features essential for distinguishing bird vocalizations.
 
@@ -61,28 +61,30 @@ To enhance the model’s robustness and generalization, several data augmentatio
     \item Mixup: Spectrograms are mixed to create synthetic samples with multiple labels, an augmentation method particularly effective for underrepresented bird species in the dataset. This technique is applied with a probability of 0.7 to prioritize species with limited data\cite{zhang2017mixup}.
 \end{itemize}
 
-\begin{figure}[h!]
+\begin{figure}[h]
     \centering
-    \begin{minipage}{.5\textwidth}
-        \centering
-        \includegraphics[width=0.9\linewidth]{dataaugmentations.png}
-        \label{fig:augmentation}
-    \end{minipage}%
-    \begin{minipage}{.5\textwidth}
-        \centering
-        \includegraphics[width=.9\linewidth]{mixup.png}
-        \label{fig:augmentation}
-    \end{minipage}
-    \caption{}
-    \label{fig:augmentation}
+    \includegraphics[width=0.8\textwidth]{dataaugmentations.png}
+    \caption{Example of augmented spectrogram using Gaussian noise and frequency masking, demonstrating enhanced robustness for the model during training.
+    }
+    \vspace{0.1cm}
+    \label{fig:augmentation1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{mixup.png}
+    \caption{Spectrogram with mixup augmentation, blending features from two different audio samples to improve generalization across classes.}
+    \vspace{0.1cm}
+    \label{fig:augmentation2}
 \end{figure}
 
-After augmentation, each spectrogram undergoes Per-Channel Energy Normalization to further standardize the data and improve model stability.
+All the different augmentation are applied with a probability of 0.3 on the different spectrogram during the training part.
+
+The training dataset comprises 80\% of the combined BirdCLEF and Xeno-Canto datasets. To address the inherent class imbalance in the dataset, 70\% of the samples from each class are included in the training set to ensure that no class is underrepresented during training. The remaining data is split into a validation set (20\%) and a test set (10\%). All performance metrics and results are derived exclusively from the test set, ensuring an unbiased evaluation of the model’s ability to generalize to unseen data.
 
 \subsection{Model training}
 Multiple architectures are employed during the training phase, each selected for its potential in feature extraction or direct classification:
 
-ResNet, EfficientNet, EfficientNetV2, Vision Transformers, Swin Transformers, and Data-Efficient Image Transformers are tested as backbones for either feature extraction or direct prediction \cite{he2016deep,tan2019efficientnet,tan2021efficientnetv2, dosovitskiy2020image, liu2021swin, touvron2021training}. In cases where the model is used for feature extraction, an attention block is added to focus on relevant features, enabling more accurate predictions.
+ResNet, EfficientNet, and EfficientNetV2\cite{he2016deep,tan2019efficientnet,tan2021efficientnetv2} were employed as feature extractors, but since they are not inherently designed to handle temporal patterns, an attention mechanism was added to account for the temporal dynamics of the sound. In contrast, Vision Transformers, Swin Transformers, and Data-Efficient Image Transformers \cite{dosovitskiy2020image, liu2021swin, touvron2021training}inherently capture temporal patterns, eliminating the need for an additional attention block.
 
 During training, the models are optimized using binary cross-entropy loss, with the AdamW optimizer and a cosine annealing scheduler. The initial learning rate is set at 0.001, with a batch size of 64. This setup balances model convergence with computational efficiency, ensuring that the models are capable of learning the intricate patterns in bird vocalizations.
 
@@ -90,15 +92,16 @@ To improve the accuracy for later use, postprocessing involves two thresholding 
 
 \begin{itemize}
 \item Call/No-Call Threshold: To determine whether a bird vocalization is present, the maximum confidence score across all species in each 5-second frame is compared against a threshold. If the score falls below this threshold, the segment is classified as "no call."
-\item Confidence Threshold: A secondary, species-specific threshold is used to ensure confident identification of the bird species. This threshold is parameterized per species, enhancing the reliability of predictions in the presence of diverse acoustic conditions.
-These postprocessing steps, coupled with the training on the BirdCLEF train soundscape dataset, improve the model's accuracy and reduce false positives, especially in noisy environments.
+\item Confidence Threshold: This threshold is parameterized per species, enhancing the reliability of predictions in the presence of diverse acoustic conditions.
 \end{itemize}
+
+These postprocessing steps, coupled with the training on the BirdCLEF train soundscape dataset, improve the model's accuracy and reduce false positives, especially in noisy environments.
 
 \subsection{Model results}
 
 \subsubsection{Model Performance Across Different Architectures and Number of Species}
 
-In the initial experiments, each architecture was tested on datasets with an increasing number of species (10, 100, and 397) to evaluate how performance scales with dataset complexity. The results show that as the number of species increases, the classification accuracy decreases due to the similarities in vocalizations among certain bird species. This similarity in acoustic patterns makes it challenging for the models to distinguish between species, leading to a noticeable decline in accuracy, especially when moving from 100 to 400 species.
+In the initial experiments, each architecture was tested on datasets with an increasing number of species (10, 100, and 397) to evaluate how performance scales with dataset complexity. The results \ref{tab:model_performance} show that as the number of species increases, the classification accuracy decreases due to the similarities in vocalizations among certain bird species. This similarity in acoustic patterns makes it challenging for the models to distinguish between species, leading to a noticeable decline in accuracy, especially when moving from 100 to 400 species.
 
 \caption{Model Performance Across Different Species and Latency (ms)}
 \begin{table}
@@ -106,11 +109,11 @@ In the initial experiments, each architecture was tested on datasets with an inc
 \hline
 \textbf{Model} & \textbf{10 Species} & \textbf{100 Species} & \textbf{397 Species} & \textbf{Latency (ms)} \\
 \hline
-ResNet-50       & 92.3\% & 85.7\% & 72.5\% & 15.4 \\
-EfficientNet-B0 & 94.1\% & 88.2\% & 74.6\% & 12.8 \\
-EfficientNetV2  & 95.5\% & 90.3\% & 78.4\% & 11.2 \\
-Vision Transformer & 96.2\% & 91.8\% & 80.7\% & 20.5 \\
-Swin Transformer   & 96.5\% & 92.4\% & 81.2\% & 18.7 \\
+ResNet-50       & 92.3 & 85.7 & 72.5 & 15.4 \\
+EfficientNet-B0 & 94.1 & 88.2 & 74.6 & 12.8 \\
+EfficientNetV2  & 95.5 & 90.3 & 78.4 & 11.2 \\
+Vision Transformer & 96.2 & 91.8 & 80.7 & 20.5 \\
+Swin Transformer   & 96.5 & 92.4 & 81.2 & 18.7 \\
 \hline
 \end{tabular}
 \label{tab:model_performance}
@@ -143,7 +146,7 @@ The table highlights that while transformer-based models achieve higher F0.5 sco
 
 \subsubsection{Impact of Data Augmentation}
 
-To further improve generalization, data augmentation techniques were applied to the training dataset. By simulating realistic variations in audio (such as background noise, frequency shifts, and mixed spectrograms), these augmentations help the model better handle variability in real-world conditions. The results show that augmented training leads to improved F0.5 scores, indicating enhanced robustness in distinguishing between species, especially when data is sparse for certain rare species.
+As we present before to improve generalization, data augmentation techniques were applied to the training dataset. By simulating realistic variations in audio, these augmentations help the model better handle variability in real-world conditions.
 
 \begin{table}[h] 
 \centering \caption{F0.5 Scores with and without Data Augmentation} 
@@ -161,7 +164,7 @@ Swin Transformer & 0.74 & 0.80 \
 \label{tab:data_augmentation_results}
 \end{table}
 
-The table above shows the improvement in F0.5 scores for each model when trained with augmentations, demonstrating that augmentation helps the models better handle challenging cases and improves generalization, especially in datasets with class imbalances. This suggests that augmentations are crucial in ensuring that models trained on bioacoustic data can effectively generalize to diverse and underrepresented species.
+The table \ref{tab:data_augmentation_results} above shows the improvement in F0.5 scores for each model when trained with augmentations, demonstrating that augmentation helps the models better handle challenging cases and improves generalization, especially in datasets with class imbalances. This suggests that augmentations are crucial in ensuring that models trained on bioacoustic data can effectively generalize to diverse and underrepresented species.
 
 \subsubsection{general and class-wise thresholds results}
 
@@ -171,25 +174,25 @@ In contrast, the class-wise threshold, illustrated by the blue bars, adjusts the
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{PCBinbox.jpg}
-    \caption{PCB housed in a waterproof box to prevent environmental damage.}
+    \includegraphics[width=0.8\textwidth]{ClassWisevsGeneralThreshold.png}
+    \caption{Comparison of Class-Wise Thresholding vs. General Thresholding on 10 different species.}
     \vspace{0.1cm}
-    \label{fig:pcb_box}
+    \label{fig:vsclass}
 \end{figure}
 
-\subsection{User Experience and Website Interface}
+\subsection{Website Interface}
 
 The user interface, developed in Python with the Streamlit framework, serves as an accessible platform for users to interact with the bird classification model. This interface is designed to facilitate easy access to both real-time audio monitoring and previously classified audio, providing a comprehensive tool for both exploration and validation. The system’s data storage and processing, essential for maintaining a responsive interface, are managed on a personal computer with GPU support to handle the computational demands of spectrogram transformations and model inference.
 
 All audio data, along with high-confidence model predictions, are stored on the local file system. This setup not only supports model training and future retraining but also enables efficient access to audio samples for user interaction through the interface. The interface itself is divided into two primary pages, each serving specific functions:
 
-The first page acts as a real-time dashboard where users can view audio input activity from the connected microphones. Displaying incoming audio streams as they are received, this page offers users an immediate sense of the soundscape captured by the microphones, showcasing the live acoustic environment of the forest. Figure \ref{fig} shows the interface displaying microphone activity, with the website indicating when no audio has been received (a) and when two audio files have been captured by different modules (b). This page provides users with an immersive auditory experience, allowing them to connect with the forest’s sounds as they occur.
+The first page acts as a real-time dashboard where users can view audio input activity from the connected microphones. Displaying incoming audio streams as they are received, this page offers users an immediate sense of the soundscape captured by the microphones, showcasing the live acoustic environment of the forest. Figure \ref{fig:website} shows the interface displaying microphone activity, with the website indicating when no audio has been received (a) and when two audio files have been captured by different modules (b). This page provides users with an immersive auditory experience, allowing them to connect with the forest’s sounds as they occur.
 
 \begin{figure}[h!]
     \centering
     \begin{minipage}{.5\textwidth}
         \centering
-        \includegraphics[width=0.9\linewidth]{dataaugmentations.png}
+        \includegraphics[width=0.9\linewidth]{homepageon.PNG}
         \label{fig:augmentation}
     \end{minipage}
     \begin{minipage}{.5\textwidth}
@@ -198,7 +201,7 @@ The first page acts as a real-time dashboard where users can view audio input ac
         \label{fig:augmentation}
     \end{minipage}
     \caption{}
-    \label{fig:augmentation}
+    \label{fig:website}
 \end{figure}
 
 
