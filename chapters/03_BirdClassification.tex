@@ -126,19 +126,19 @@ Transformer-based models, such as the Vision Transformer and Swin Transformer, c
 While accuracy provides an overall measure of model performance, it can be misleading in datasets with imbalanced classes. Certain rare species, although critically important to recognize, are underrepresented in the training dataset, leading to biased predictions that favor the more common species. This imbalance leads to a model that optimizes for accuracy but may overlook rarer species, where a single misclassification can be significant.
 
 To better evaluate model generalization, we calculate the F0.5 score for each model. The F0.5 score weights false positives more heavily, reflecting the higher cost associated with misclassifying a species presence when it is not detected. The following table compares accuracy and F0.5 scores for each model, showing the disparity between models that perform well on common species versus those that better generalize to all species, including rare ones.
-\caption{Model Accuracy and F0.5 Scores for Generalization Performance}
 \begin{table}[h] 
 \begin{tabular}{|l|c|c|} 
 \hline
-\textbf{Model} & \textbf{Accuracy (\%)} & \textbf{F0.5 Score} \ 
+\textbf{Model} & \textbf{Accuracy (\%)} & \textbf{F0.5 Score} \\
 \hline 
-ResNet-50 & 78.4 & 0.63 \
-EfficientNet-B0 & 81.2 & 0.68 \ 
-EfficientNetV2 & 83.5 & 0.72 \ 
-Vision Transformer & 86.3 & 0.75 \ 
-Swin Transformer & 87.1 & 0.77 \ 
+ResNet-50 & 78.4 & 0.63 \\
+EfficientNet-B0 & 81.2 & 0.68 \\
+EfficientNetV2 & 83.5 & 0.72 \\
+Vision Transformer & 86.3 & 0.75 \\
+Swin Transformer & 87.1 & 0.77 \\
 \hline 
-\end{tabular} 
+\end{tabular}
+\caption{Model Accuracy and F0.5 Scores for Generalization Performance}
 \label{tab:f1_score}
 \end{table}
 
@@ -148,23 +148,23 @@ The table highlights that while transformer-based models achieve higher F0.5 sco
 
 As we present before to improve generalization, data augmentation techniques were applied to the training dataset. By simulating realistic variations in audio, these augmentations help the model better handle variability in real-world conditions.
 
-\begin{table}[h] 
-\centering \caption{F0.5 Scores with and without Data Augmentation} 
+\begin{table}[h]  
 \begin{tabular}{|l|c|c|} 
 \hline 
-\textbf{Model} & \textbf{F0.5 Score without Augmentation} & \textbf{F0.5 Score with Augmentation} \ 
+\textbf{Model} & \textbf{F0.5 Score without Augmentation} & \textbf{F0.5 Score with Augmentation} \\
 \hline 
-ResNet-50 & 0.61 & 0.68 \ 
-EfficientNet-B0 & 0.64 & 0.71 \ 
-EfficientNetV2 & 0.69 & 0.74 \ 
-Vision Transformer & 0.72 & 0.78 \ 
-Swin Transformer & 0.74 & 0.80 \ 
+ResNet-50 & 0.61 & 0.68 \\
+EfficientNet-B0 & 0.64 & 0.71 \\
+EfficientNetV2 & 0.69 & 0.74 \\
+Vision Transformer & 0.72 & 0.78 \\
+Swin Transformer & 0.74 & 0.80 \\
 \hline 
 \end{tabular} 
+\caption{F0.5 Scores with and without Data Augmentation} 
 \label{tab:data_augmentation_results}
 \end{table}
 
-The table \ref{tab:data_augmentation_results} above shows the improvement in F0.5 scores for each model when trained with augmentations, demonstrating that augmentation helps the models better handle challenging cases and improves generalization, especially in datasets with class imbalances. This suggests that augmentations are crucial in ensuring that models trained on bioacoustic data can effectively generalize to diverse and underrepresented species.
+The table \ref{data_augmentation_results} above shows the improvement in F0.5 scores for each model when trained with augmentations, demonstrating that augmentation helps the models better handle challenging cases and improves generalization, especially in datasets with class imbalances. This suggests that augmentations are crucial in ensuring that models trained on bioacoustic data can effectively generalize to diverse and underrepresented species.
 
 \subsubsection{general and class-wise thresholds results}
 
