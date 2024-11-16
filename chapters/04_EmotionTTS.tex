@@ -76,7 +76,7 @@ The evaluation involved a user study with 20 participants who rated the synthesi
 
 \item Emotional Accuracy: Participants also evaluated the emotional accuracy of each sample by identifying the perceived emotion and then rating how effectively the synthesized voice conveyed the intended emotion. High emotional accuracy indicates that the model successfully captured the distinct tonal and prosodic cues associated with each emotion, an important factor in creating expressive and relatable speech.
 
-\item Overall Quality: To capture a more general assessment, participants rated the overall quality of each sample, considering both intelligibility and expressiveness. This metric allowed participants to weigh the emotional expressiveness alongside audio quality, providing a comprehensive view of the model’s performance.
+\item audio Quality: To capture a more general assessment, participants rated the overall quality of each sample, considering both intelligibility and expressiveness. This metric allowed participants to weigh the emotional expressiveness alongside audio quality, providing a comprehensive view of the model’s performance.
 \end{enumerate}
 
 Tho evaluate the different criteria, the metric used in this study is the Mean Opinion Score (MOS), a widely accepted subjective measure in TTS research. MOS provides insight into how participants perceive key aspect of the audio. This scoring system allows also a straightforward comparison across emotions, providing a clear view of the model’s strengths and potential areas for improvement. Participants rate each sample on a scale from 1 to 5, with the following scale:
@@ -90,6 +90,16 @@ Tho evaluate the different criteria, the metric used in this study is the Mean O
 \end{enumerate}
 
 Each participant rated a randomized set of synthesized samples across these criteria, ensuring that feedback was consistent and unbiased. The MOS results from this study will provide valuable insights into the effectiveness of the emotional modulation techniques used in this TTS system, helping to identify areas for refinement and future work.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{reactivityAPI.png}
+    \caption{Combined Mean Opinion Scores for Naturalness, Emotional Accuracy, and Overall Quality across five emotions.}
+    \vspace{0.1cm}
+    \label{fig:reactivity_api}
+\end{figure}
+
+
 
 \subsection{Discussion}
 The evaluation of the emotional TTS system yielded valuable insights into the model’s strengths and limitations. The Mean Opinion Score (MOS) ratings from the user study showed promising results in both naturalness and emotional accuracy, particularly for emotions with gradual tonal shifts, such as amused and sleepy. The FastSpeech2 and HiFi-GAN combination was effective in producing natural, high-quality speech that participants consistently rated as sounding human-like. This success highlights the robustness of the FastSpeech2 architecture for efficient TTS and the critical role of HiFi-GAN in achieving high fidelity in audio output.
