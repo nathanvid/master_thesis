@@ -1,24 +1,30 @@
-# Master Thesis: How Can Sensing Techniques Redefine Our Interaction with Plants?
+# Master Thesis: Sound-Based AI and Augmented Reality for Interactive Systems
 
-**Author**: Matthieu SEGUI  
-**Date**: Not finished yet  
-**Supervisors**: Clément Duhart, Marc Teyssier  
+**Author**: Nathan VIDAL  
+**Date**: 21 November 2024
+**Supervisors**: Xiao Xiao 
 
-This repository contains the LaTeX source code and assets for my master thesis titled _"How Can Sensing Techniques Redefine Our Interaction with Plants?"_. The thesis explores the integration of bio-sensing techniques, the Internet of Plants (IoP), and sonification to enhance human-plant interaction. The work presents technical prototypes, theoretical backgrounds, user studies, and a final discussion on the applications and future directions of this research.
+This repository contains the LaTeX source code and assets for my master thesis exploring the integration of sound-based artificial intelligence and augmented reality to develop interactive systems for environmental monitoring, emotional expression, and immersive learning. The thesis presents three distinct projects that demonstrate the potential of AI and AR to transform Human-Computer Interaction in conservation, education, and performance arts.
 
 ## Project Structure
 
 - `main.tex`: The main LaTeX file that compiles the entire thesis document.
 - `chapters/`: This folder contains separate `.tex` files for each chapter and section of the thesis.
   - `01_introduction.tex`: Introduction and background motivation.
-  - `02_SOTA.tex`: State of the art, including plant sensors, sonification, and IoP technologies.
-  - `03_contribution_1.tex`: Technical implementation of plant-based sensors.
-  - `04_contribution_2.tex`: Concept and architecture of the Internet of Plants.
-  - `05_conclusion.tex`: Final conclusions and future work.
+  - `02_SOTA.tex`: State of the art in sound-based AI, TTS systems, and AR technologies.
+  - `03_BirdClassification.tex`: Machine learning for bird species classification through vocalizations.
+  - `04_EmotionTTS.tex`: Development of an emotionally adaptive text-to-speech system.
+  - `05_TheatreApplication.tex`: AR-based theater training platform with virtual character interaction.
+  - `06_Conclusion.tex`: Final conclusions and future work.
+  - `abstract.tex`: Thesis abstract.
+  - `acknowledgements.tex`: Acknowledgements section.
 - `images/`: Contains all figures, diagrams, and illustrations used in the thesis.
 - `main.bib`: The BibTeX file containing all references cited throughout the thesis.
-- `appendices/`: Any supplementary material, including additional graphs, detailed technical designs, or extended evaluation results.
-- `style/`: LaTeX configuration files (e.g., for formatting, styles, and packages).
+- `chapters/appendix/`: Any supplementary material, including additional graphs, detailed technical designs, or extended evaluation results.
+- `styles/`: LaTeX configuration files (e.g., for formatting, styles, and packages).
+- `kaobook.cls`: Custom LaTeX document class used for thesis formatting.
+- `docs/`: Additional documentation and project files.
+- `temp.ipynb`: Jupyter notebook for data analysis and experimentation.
 
 ## Requirements
 
@@ -63,4 +69,14 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-For any questions, feel free to contact me on Linkedin: [Link to profile](www.linkedin.com/in/matthieu-segui).
+## Thesis Overview
+
+This thesis presents three interconnected projects:
+
+1. **Bird Species Classification**: A machine learning system for classifying bird species through their vocalizations, contributing to accessible bioacoustic monitoring for environmental conservation.
+
+2. **Emotionally Adaptive TTS System**: Development of a text-to-speech system that can express emotions, enhancing Human-Computer Interaction with more lifelike and engaging vocal interfaces.
+
+3. **AR Theater Training Platform**: An augmented reality application that combines TTS and AR technologies to create an immersive theater training environment where students can interact with virtual characters and receive real-time feedback.
+
+For any questions, feel free to contact the author through the university.
